@@ -19,6 +19,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using LuminaSeStringBuilder = Lumina.Text.SeStringBuilder;
 using static CharacterSelectPlugin.Configuration;
+using Dalamud.Game.Chat;
 
 namespace CharacterSelectPlugin
 {
@@ -32,6 +33,7 @@ namespace CharacterSelectPlugin
         private readonly IPluginLog log;
         private readonly IPartyList partyList;
         private readonly ICondition condition;
+        private readonly IObjectTable objectTable;
 
         // Wave animation
         private static readonly Stopwatch AnimationTimer = Stopwatch.StartNew();
@@ -68,7 +70,7 @@ namespace CharacterSelectPlugin
             Plugin plugin,
             INamePlateGui namePlateGui,
             IChatGui chatGui,
-            IClientState clientState,
+            IObjectTable objectTable,
             IAddonLifecycle addonLifecycle,
             IPluginLog log,
             IPartyList partyList,
@@ -77,7 +79,7 @@ namespace CharacterSelectPlugin
             this.plugin = plugin;
             this.namePlateGui = namePlateGui;
             this.chatGui = chatGui;
-            this.clientState = clientState;
+            this.objectTable = objectTable;
             this.addonLifecycle = addonLifecycle;
             this.log = log;
             this.partyList = partyList;
@@ -421,7 +423,7 @@ namespace CharacterSelectPlugin
             INamePlateUpdateContext context,
             IReadOnlyList<INamePlateUpdateHandler> handlers)
         {
-            var localPlayer = clientState.LocalPlayer;
+            var localPlayer = objectTable.LocalPlayer;
             if (localPlayer == null)
                 return;
 
@@ -529,13 +531,9 @@ namespace CharacterSelectPlugin
         }
 
         private void OnChatMessage(
-            XivChatType type,
-            int timestamp,
-            ref SeString sender,
-            ref SeString message,
-            ref bool isHandled)
+            IHandleableChatMessage chatMessage)
         {
-            var localPlayer = clientState.LocalPlayer;
+            var localPlayer = objectTable.LocalPlayer;
             if (localPlayer == null)
                 return;
 
@@ -552,7 +550,7 @@ namespace CharacterSelectPlugin
                 return;
 
             var localName = localPlayer.Name.TextValue;
-            var senderText = sender.TextValue;
+            var senderText = chatMessage.Sender.TextValue;
 
             // Self replacement
             if (selfReplacementEnabled && senderText.Contains(localName))
@@ -562,7 +560,7 @@ namespace CharacterSelectPlugin
                 var chatDisplayName = !string.IsNullOrWhiteSpace(activeChar?.Alias) ? activeChar.Alias : activeChar?.Name;
                 if (activeChar != null && !activeChar.ExcludeFromNameSync && !string.IsNullOrEmpty(chatDisplayName))
                 {
-                    sender = ReplaceSenderName(sender, localName, chatDisplayName, activeChar.NameplateColor);
+                    chatMessage.Sender = ReplaceSenderName(chatMessage.Sender, localName, chatDisplayName, activeChar.NameplateColor);
                     return;
                 }
             }
@@ -575,7 +573,7 @@ namespace CharacterSelectPlugin
                 if (match.HasValue)
                 {
                     var (sharedEntry, originalName) = match.Value;
-                    sender = ReplaceSenderName(sender, originalName, sharedEntry.CSName, sharedEntry.NameplateColor);
+                    chatMessage.Sender = ReplaceSenderName(chatMessage.Sender, originalName, sharedEntry.CSName, sharedEntry.NameplateColor);
                 }
             }
         }
@@ -633,7 +631,7 @@ namespace CharacterSelectPlugin
         /// </summary>
         private unsafe void OnTargetAddonUpdate(AddonEvent type, AddonArgs args)
         {
-            var localPlayer = clientState.LocalPlayer;
+            var localPlayer = objectTable.LocalPlayer;
             if (localPlayer == null)
                 return;
 
@@ -804,7 +802,7 @@ namespace CharacterSelectPlugin
             if (addon == null || !addon->AtkUnitBase.IsVisible)
                 return;
 
-            var localPlayer = clientState.LocalPlayer;
+            var localPlayer = objectTable.LocalPlayer;
             if (localPlayer == null)
                 return;
 
@@ -1178,7 +1176,7 @@ namespace CharacterSelectPlugin
                 return;
 
             // Get local player name to exclude from shared replacement
-            var localPlayer = clientState.LocalPlayer;
+            var localPlayer = objectTable.LocalPlayer;
             var localName = localPlayer?.Name.TextValue;
 
             var nodeList = addon->UldManager.NodeList;

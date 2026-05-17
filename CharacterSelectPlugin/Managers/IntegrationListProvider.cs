@@ -227,13 +227,13 @@ namespace CharacterSelectPlugin.Managers
 
             try
             {
-                var localPlayer = Plugin.ClientState?.LocalPlayer;
+                var localPlayer = Plugin.RePlayerState;
                 if (localPlayer == null)
                 {
                     return cachedHonorificTitles;
                 }
 
-                var name = localPlayer.Name.TextValue;
+                var name = localPlayer.CharacterName;
                 var worldId = localPlayer.HomeWorld.RowId;
 
                 var titles = honorificGetTitleListIpc?.InvokeFunc(name, worldId);

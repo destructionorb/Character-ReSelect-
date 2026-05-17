@@ -1775,10 +1775,10 @@ namespace CharacterSelectPlugin.Windows
                 }
             }
 
-            if (Plugin.ClientState.LocalPlayer?.HomeWorld.IsValid == true)
+            if (Plugin.RePlayerState?.HomeWorld.IsValid == true)
             {
-                var currentPhysicalName = Plugin.ClientState.LocalPlayer.Name.TextValue;
-                var currentServer = Plugin.ClientState.LocalPlayer.HomeWorld.Value.Name.ToString();
+                var currentPhysicalName = Plugin.RePlayerState.CharacterName;
+                var currentServer = Plugin.RePlayerState.HomeWorld.Value.Name.ToString();
                 var currentPhysicalKey = $"{currentPhysicalName}@{currentServer}";
 
                 var hasPublicCharacters = plugin.Characters.Any(c => c.RPProfile?.Sharing == ProfileSharing.ShowcasePublic);
@@ -4023,10 +4023,10 @@ namespace CharacterSelectPlugin.Windows
 
         private string GetCurrentCharacterKey()
         {
-            if (Plugin.ClientState.LocalPlayer?.HomeWorld.IsValid == true)
+            if (Plugin.RePlayerState.HomeWorld.IsValid == true)
             {
-                var name = Plugin.ClientState.LocalPlayer.Name.TextValue;
-                var world = Plugin.ClientState.LocalPlayer.HomeWorld.Value.Name.ToString();
+                var name = Plugin.RePlayerState.CharacterName;
+                var world = Plugin.RePlayerState.HomeWorld.Value.Name.ToString();
                 return $"{name}@{world}";
             }
             return "";

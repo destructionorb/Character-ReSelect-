@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Dalamud.NET.Sdk/14.0.1">
+﻿<Project Sdk="Dalamud.NET.Sdk/15.0.0">
     <PropertyGroup>
         <TargetFramework>net10.0-windows</TargetFramework>
         <!-- Windows-specific target framework -->
@@ -10,8 +9,8 @@
         <IsPackable>false</IsPackable>
         <UseWindowsForms>true</UseWindowsForms>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    </PropertyGroup>
-
+      <UserSecretsId>39e1f8a5-b0d6-44c6-ad05-a9405ac1dcfb</UserSecretsId>
+  </PropertyGroup>
     <ItemGroup>
         <Reference Include="System.Windows.Forms" />
     </ItemGroup>

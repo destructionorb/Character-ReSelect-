@@ -40,6 +40,7 @@ namespace CharacterSelectPlugin
         private readonly IPluginLog log;
         private readonly IDalamudPluginInterface pluginInterface;
         private readonly IClientState clientState;
+        private readonly IObjectTable objectTable;
 
         // Availability check
         private ICallGateSubscriber<int>? penumbraApiVersion;
@@ -56,11 +57,11 @@ namespace CharacterSelectPlugin
 
         public bool IsPenumbraAvailable { get; private set; }
 
-        public PenumbraIntegration(IDalamudPluginInterface pluginInterface, IPluginLog log, IClientState clientState)
+        public PenumbraIntegration(IDalamudPluginInterface pluginInterface, IPluginLog log, IObjectTable objectTable)
         {
             this.pluginInterface = pluginInterface;
             this.log = log;
-            this.clientState = clientState;
+            this.objectTable = objectTable;
 
             InitializePenumbraAPI();
         }
@@ -519,7 +520,7 @@ namespace CharacterSelectPlugin
             try
             {
                 // Get local player's object index
-                var localPlayer = clientState.LocalPlayer;
+                var localPlayer = objectTable.LocalPlayer;
                 if (localPlayer == null)
                 {
                     log.Warning("No local player for collection reset");

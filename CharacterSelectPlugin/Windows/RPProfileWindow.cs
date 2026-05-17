@@ -214,10 +214,10 @@ namespace CharacterSelectPlugin.Windows
 
             string? currentPlayerName = null;
             string? currentWorldName = null;
-            var currentPlayer = Plugin.ClientState.LocalPlayer;
+            var currentPlayer = Plugin.RePlayerState;
             if (currentPlayer?.HomeWorld.IsValid == true)
             {
-                currentPlayerName = currentPlayer.Name.TextValue;
+                currentPlayerName = currentPlayer.CharacterName;
                 currentWorldName = currentPlayer.HomeWorld.Value.Name.ToString();
             }
             _ = SyncNSFWFromServerAsync(character, currentPlayerName, currentWorldName);
@@ -889,9 +889,9 @@ namespace CharacterSelectPlugin.Windows
 
                     if (!string.IsNullOrWhiteSpace(character.LastInGameName))
                     {
-                        if (Plugin.ClientState.LocalPlayer is { } player && player.HomeWorld.IsValid)
+                        if (Plugin.RePlayerState is { } player && player.HomeWorld.IsValid)
                         {
-                            string localName = player.Name.TextValue;
+                            string localName = player.CharacterName;
                             string worldName = player.HomeWorld.Value.Name.ToString();
                             string fullKey = $"{localName}@{worldName}";
 

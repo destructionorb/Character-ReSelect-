@@ -31,7 +31,9 @@ namespace CharacterSelectPlugin
         private readonly IClientState clientState;
         private readonly IPluginLog log;
         private readonly ICondition condition;
-        private static int debugLogCount = 0;
+        private readonly IPlayerState rePlayerState;
+        private readonly IObjectTable objectTable;
+        private static int DebugLogCount = 0;
         private const bool ENABLE_FLAG_DISCOVERY_LOGGING = false;
 
         // Lua hooks
@@ -943,13 +945,13 @@ namespace CharacterSelectPlugin
         private static readonly Regex SisterCapitalRegex = new Regex(@"\bSister\b", RegexOptions.Compiled);
 
         public NPCDialogueProcessor(Plugin plugin, ISigScanner sigScanner, IGameInteropProvider gameInteropProvider,
-            IChatGui chatGui, IClientState clientState, IPluginLog log, ICondition condition)
+            IChatGui chatGui, IObjectTable objectTable, IPluginLog log, ICondition condition)
         {
             this.plugin = plugin;
             this.sigScanner = sigScanner;
             this.gameInteropProvider = gameInteropProvider;
             this.chatGui = chatGui;
-            this.clientState = clientState;
+            this.objectTable = objectTable;
             this.log = log;
             this.condition = condition;
 
@@ -1936,7 +1938,7 @@ namespace CharacterSelectPlugin
         {
             try
             {
-                var playerName = clientState.LocalPlayer?.Name.TextValue;
+                var playerName = rePlayerState?.CharacterName;
                 if (string.IsNullOrEmpty(playerName)) return;
 
                 var textSpan = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(text);

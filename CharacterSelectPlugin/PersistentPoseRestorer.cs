@@ -11,16 +11,17 @@ public unsafe class PoseRestorer
 {
     private readonly IClientState clientState;
     private readonly Plugin plugin;
+    private readonly IObjectTable objectTable;
 
-    public PoseRestorer(IClientState clientState, Plugin plugin)
+    public PoseRestorer(IObjectTable objectTable, Plugin plugin)
     {
-        this.clientState = clientState;
+        this.objectTable = objectTable;
         this.plugin = plugin;
     }
 
     public void RestorePosesFor(Character character)
     {
-        if (clientState.LocalPlayer == null) return;
+        if (objectTable.LocalPlayer == null) return;
 
         Plugin.Framework.RunOnTick(() =>
         {
@@ -30,7 +31,7 @@ public unsafe class PoseRestorer
 
     private void ApplyPose(Character character)
     {
-        var local = clientState.LocalPlayer;
+        var local = objectTable.LocalPlayer;
         if (local == null || local.Address == IntPtr.Zero)
             return;
 

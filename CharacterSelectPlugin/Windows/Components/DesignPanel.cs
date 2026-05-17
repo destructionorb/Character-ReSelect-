@@ -1769,9 +1769,9 @@ namespace CharacterSelectPlugin.Windows.Components
                             plugin.Configuration.LastUsedCharacterKey = character.Name;
                             
                             // Update player-specific character tracking for green highlighting
-                            if (Plugin.ClientState.LocalPlayer is { } player && player.HomeWorld.IsValid)
+                            if (Plugin.RePlayerState is { } player && player.HomeWorld.IsValid)
                             {
-                                string localName = player.Name.TextValue;
+                                string localName = player.CharacterName;
                                 string worldName = player.HomeWorld.Value.Name.ToString();
                                 string fullKey = $"{localName}@{worldName}";
                                 string pluginCharacterKey = $"{character.Name}@{worldName}";
@@ -1792,9 +1792,9 @@ namespace CharacterSelectPlugin.Windows.Components
                     plugin.Configuration.LastUsedCharacterKey = character.Name;
                     
                     // Update player-specific character tracking for green highlighting
-                    if (Plugin.ClientState.LocalPlayer is { } player && player.HomeWorld.IsValid)
+                    if (Plugin.RePlayerState is { } player && player.HomeWorld.IsValid)
                     {
-                        string localName = player.Name.TextValue;
+                        string localName = player.CharacterName;
                         string worldName = player.HomeWorld.Value.Name.ToString();
                         string fullKey = $"{localName}@{worldName}";
                         string pluginCharacterKey = $"{character.Name}@{worldName}";
@@ -3937,9 +3937,9 @@ namespace CharacterSelectPlugin.Windows.Components
             Character? currentCharacter = null;
 
             // Try player-specific mapping first
-            if (Plugin.ClientState.LocalPlayer is { } player && player.HomeWorld.IsValid)
+            if (Plugin.RePlayerState is { } player && player.HomeWorld.IsValid)
             {
-                string localName = player.Name.TextValue;
+                string localName = player.CharacterName;
                 string worldName = player.HomeWorld.Value.Name.ToString();
                 string fullKey = $"{localName}@{worldName}";
                 
