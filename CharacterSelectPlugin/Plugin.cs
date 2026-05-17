@@ -404,7 +404,7 @@ namespace CharacterSelectPlugin
                 }
             });
 
-            PoseManager = new PoseManager(ObjectTable, Framework, ChatGui, CommandManager, this);
+            PoseManager = new PoseManager(ClientState, Framework, ChatGui, CommandManager, this);
             PoseRestorer = new PoseRestorer(ObjectTable, this);
             
             // Initialize Penumbra integration services

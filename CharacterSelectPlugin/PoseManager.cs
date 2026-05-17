@@ -16,9 +16,9 @@ public class PoseManager
     private readonly Plugin plugin;
     private readonly IObjectTable objectTable;
 
-    public PoseManager(IObjectTable objectTable, IFramework framework, IChatGui chatGui, ICommandManager commandManager, Plugin plugin)
+    public PoseManager(IClientState clientState, IFramework framework, IChatGui chatGui, ICommandManager commandManager, Plugin plugin)
     {
-        this.objectTable = objectTable;
+        this.clientState = clientState;
         this.framework = framework;
         this.chatGui = chatGui;
         this.commandManager = commandManager;
@@ -180,10 +180,10 @@ public class PoseManager
     {
         if (!plugin.Configuration.EnablePoseAutoSave || !clientState.IsLoggedIn)
             return;
-        if (objectTable.LocalPlayer == null)
+        if (Plugin.ObjectTable.LocalPlayer == null)
             return;
 
-        var charPtr = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)objectTable.LocalPlayer.Address;
+        var charPtr = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)Plugin.ObjectTable.LocalPlayer.Address;
     }
 
     private EmoteController.PoseType TranslatePoseState(byte state)
