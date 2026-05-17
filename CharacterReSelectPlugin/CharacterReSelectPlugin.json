@@ -1,0 +1,23 @@
+{
+    "Author": "destructionorb",
+    "Name": "Character ReSelect",
+    "InternalName": "CharacterReSelectPlugin",
+    "AssemblyVersion": "2.0.0.8",
+    "Description": "",
+    "ApplicableVersion": "any",
+    "Tags": [
+        "character", "reselect",
+        "select", "switch",
+        "ocs",
+        "rp",
+        "roleplay"
+    ],
+    "DalamudApiLevel": 15,
+    "LoadRequiredState": 0,
+    "LoadSync": false,
+    "CanUnloadAsync": false,
+    "LoadPriority": 0,
+    "Punchline": "Character switching made simple-er.",
+    "AcceptsFeedback": true,
+    "IconUrl": "https://cdn.discordapp.com/emojis/1482583223132356698.webp?size=96"
+}

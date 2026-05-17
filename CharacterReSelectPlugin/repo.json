@@ -1,0 +1,23 @@
+[
+    {
+        "Author": "destructionorb",
+        "Name": "Character ReSelect",
+        "Description": "",
+        "Tags": [
+            "Character",
+            "Select"
+        ],
+        "InternalName": "CharacterReSelectPlugin",
+        "AssemblyVersion": "2.1.0.11",
+        "TestingAssemblyVersion": "2.1.0.11",
+        "RepoUrl": "https://github.com/destructionorb/Character-ReSelect-",
+        "ApplicableVersion": "any",
+        "DalamudApiLevel": 14,
+        "IsHide": "False",
+        "IsTestingExclusive": "False",
+        "DownloadLinkInstall": "https://github.com/IcarusXIV/Character-Select-/releases/download/2.1.0.11/CharacterSelectPlugin.zip",
+        "DownloadLinkTesting": "https://github.com/IcarusXIV/Character-Select-/releases/download/2.1.0.11/CharacterSelectPlugin.zip",
+        "DownloadLinkUpdate": "https://github.com/IcarusXIV/Character-Select-/releases/download/2.1.0.11/CharacterSelectPlugin.zip",
+        "IconUrl": "https://raw.githubusercontent.com/IcarusXIV/Character-Select-/master/CharacterSelectPlugin/Assets/Icon.png"
+    }
+]
