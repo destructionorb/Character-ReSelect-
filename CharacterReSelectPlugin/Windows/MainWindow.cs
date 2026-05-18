@@ -38,7 +38,7 @@ namespace CharacterReSelectPlugin.Windows
         public DesignPanel? GetDesignPanel() => designPanel;
 
         public MainWindow(Plugin plugin)
-            : base("Character Select+", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoDocking)
+            : base("Character ReSelect+", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoDocking)
         {
             SizeConstraints = new WindowSizeConstraints
             {
@@ -310,7 +310,7 @@ namespace CharacterReSelectPlugin.Windows
             ImGui.SetCursorPosX(ImGui.GetCursorPosX() + availableWidth - buttonWidth - iconButtonSize - spacing);
 
             // Revert button
-            if (uiStyles.IconButton("\uf0e2", "Revert All CS+ Changes\n\nReverts:\n• Glamourer → Game state\n• Honorific → Cleared\n• Moodles → All removed\n• Customize+ → Disabled\n• Penumbra → Your Character collection\n• CS+ → No active character", new Vector2(iconButtonSize, iconButtonSize)))
+            if (uiStyles.IconButton("\uf0e2", "Revert All CRS+ Changes\n\nReverts:\n• Glamourer → Game state\n• Honorific → Cleared\n• Moodles → All removed\n• Customize+ → Disabled\n• Penumbra → Your Character collection\n• CRS+ → No active character", new Vector2(iconButtonSize, iconButtonSize)))
             {
                 plugin.RevertAllChanges();
             }
@@ -563,7 +563,7 @@ namespace CharacterReSelectPlugin.Windows
             if (ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenBlockedByPopup))
             {
                 ImGui.BeginTooltip();
-                ImGui.Text("Discover all the features CS+ has to offer!");
+                ImGui.Text("Discover all the features CRS+ has to offer!");
                 ImGui.Text("Tips, tricks, and hidden gems.");
                 ImGui.EndTooltip();
             }
@@ -578,7 +578,7 @@ namespace CharacterReSelectPlugin.Windows
             if (ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenBlockedByPopup))
             {
                 ImGui.BeginTooltip();
-                ImGui.Text("View what's new in Character Select+");
+                ImGui.Text("View what's new in Character ReSelect+");
                 ImGui.Text("See the latest features and updates!");
                 ImGui.EndTooltip();
             }
@@ -699,7 +699,7 @@ namespace CharacterReSelectPlugin.Windows
 
             if (isHovered)
             {
-                ImGui.SetTooltip("Enjoy Character Select+? Consider supporting development on Ko-fi!");
+                ImGui.SetTooltip("Enjoy Character ReSelect+? Consider supporting development on Ko-fi!");
             }
         }
 

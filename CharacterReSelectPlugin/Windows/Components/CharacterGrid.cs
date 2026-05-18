@@ -1605,7 +1605,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                             targetChar.SecretModState = new Dictionary<string, bool>();
                         }
 
-                        Plugin.ChatGui.Print("[Character Select+] Character conversion to Secret Mode enabled. Configure mods in the Edit window.");
+                        Plugin.ChatGui.Print("[Character ReSelect+] Character conversion to Secret Mode enabled. Configure mods in the Edit window.");
                     }
                     // Always open edit window (either with converted or original macro)
                     plugin.OpenEditCharacterWindow(realIndex);
@@ -1873,7 +1873,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                 var target = plugin.GetCurrentTarget();
                 if (target == null)
                 {
-                    Plugin.ChatGui.PrintError("[Character Select+] No target selected.");
+                    Plugin.ChatGui.PrintError("[Character ReSelect+] No target selected.");
                 }
                 else
                 {
@@ -1957,7 +1957,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                             var target = plugin.GetCurrentTarget();
                             if (target == null)
                             {
-                                Plugin.ChatGui.PrintError("[Character Select+] No target selected.");
+                                Plugin.ChatGui.PrintError("[Character ReSelect+] No target selected.");
                             }
                             else
                             {

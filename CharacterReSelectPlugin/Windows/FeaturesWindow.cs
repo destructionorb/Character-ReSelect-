@@ -42,7 +42,7 @@ public class FeaturesWindow : Window, IDisposable
         string[] Keywords);
 
     public FeaturesWindow(Plugin plugin) : base(
-        "CS+ Features Guide",
+        "CRS+ Features Guide",
         ImGuiWindowFlags.NoCollapse)
     {
         this.plugin = plugin;
@@ -91,7 +91,7 @@ public class FeaturesWindow : Window, IDisposable
                 new[] { "quick", "compact", "small", "minimal", "bar" }),
 
             new("Random Selection",
-                "Can't decide? Let CS+ pick a random character and design for you.",
+                "Can't decide? Let CRS+ pick a random character and design for you.",
                 "/select random",
                 "Quick Actions",
                 FontAwesomeIcon.Dice, orange,
@@ -105,22 +105,22 @@ public class FeaturesWindow : Window, IDisposable
                 new[] { "random", "group", "themed" }),
 
             new("Revert All Changes",
-                "One click to undo all CS+ changes and return to your base look.",
+                "One click to undo all CRS+ changes and return to your base look.",
                 "/selectrevert",
                 "Quick Actions",
                 FontAwesomeIcon.Undo, red,
                 new[] { "revert", "undo", "reset" }),
 
             // === Your Identity ===
-            new("See Your CS+ Name Everywhere",
+            new("See Your CRS+ Name Everywhere",
                 "Your nameplate, chat messages, target bar, and party list all show your character's name instead of your FFXIV name.",
                 "Settings > Name Sync",
                 "Your Identity",
                 FontAwesomeIcon.IdCard, cyan,
                 new[] { "name", "nameplate", "chat", "identity" }),
 
-            new("See Other Players' CS+ Names",
-                "See other CS+ users' character names instead of their FFXIV names. Anyone who opts in becomes visible to you.",
+            new("See Other Players' CRS+ Names",
+                "See other CRS+ users' character names instead of their FFXIV names. Anyone who opts in becomes visible to you.",
                 "Settings > Name Sync",
                 "Your Identity",
                 FontAwesomeIcon.Users, cyan,
@@ -156,7 +156,7 @@ public class FeaturesWindow : Window, IDisposable
                 new[] { "login", "auto", "remember" }),
 
             new("Character Assignments",
-                "Different FFXIV alts, different CS+ characters. Automatically.",
+                "Different FFXIV alts, different CRS+ characters. Automatically.",
                 "Settings > Character Assignments",
                 "Automation",
                 FontAwesomeIcon.Link, purple,
@@ -177,7 +177,7 @@ public class FeaturesWindow : Window, IDisposable
                 new[] { "gearset", "gear", "equipment" }),
 
             new("Reapply Design on Job Change",
-                "Changed jobs in-game? CS+ reapplies your current design to refresh your look. Handy when job-specific mods are involved.",
+                "Changed jobs in-game? CRS+ reapplies your current design to refresh your look. Handy when job-specific mods are involved.",
                 "Settings > Behavior",
                 "Automation",
                 FontAwesomeIcon.Sync, purple,
@@ -191,7 +191,7 @@ public class FeaturesWindow : Window, IDisposable
                 new[] { "glamourer", "automation", "none", "trigger" }),
 
             new("Advanced Mode & Macros",
-                "Enable Advanced Mode on a character or design to run custom macro commands on apply. Use this for anything CS+ doesn't directly support - trigger other plugins, run game commands, or execute complex sequences.",
+                "Enable Advanced Mode on a character or design to run custom macro commands on apply. Use this for anything CRS+ doesn't directly support - trigger other plugins, run game commands, or execute complex sequences.",
                 "Character Form / Design Panel",
                 "Automation",
                 FontAwesomeIcon.Code, purple,
@@ -228,7 +228,7 @@ public class FeaturesWindow : Window, IDisposable
 
             // === Apply to Target ===
             new("Apply to Target",
-                "Apply CS+ characters to other targets like GPose actors. Spawn actors with Brio or Ktisis, target them, then right-click a character card and select 'Apply to Target'.",
+                "Apply CRS+ characters to other targets like GPose actors. Spawn actors with Brio or Ktisis, target them, then right-click a character card and select 'Apply to Target'.",
                 "Right-click character card",
                 "Apply to Target",
                 FontAwesomeIcon.Crosshairs, green,
@@ -286,7 +286,7 @@ public class FeaturesWindow : Window, IDisposable
                 new[] { "conflict", "resolution", "what", "mods" }),
 
             new("Per-Character Mods",
-                "Set up mod states once per character. When you switch characters, CS+ handles enabling and disabling mods for you - no more manual Penumbra toggling.",
+                "Set up mod states once per character. When you switch characters, CRS+ handles enabling and disabling mods for you - no more manual Penumbra toggling.",
                 "/select mods",
                 "Mod Management",
                 FontAwesomeIcon.User, orange,
@@ -325,27 +325,27 @@ public class FeaturesWindow : Window, IDisposable
             new("Custom Themes",
                 "Change every colour, add background images, pick a custom favorite icon.",
                 "Settings > Visual > Custom",
-                "Customize CS+",
+                "Customize CRS+",
                 FontAwesomeIcon.Palette, purple,
                 new[] { "theme", "colour", "customize" }),
 
             new("Seasonal Themes",
                 "Halloween, Winter, Christmas - with special visual effects!",
                 "Settings > Visual",
-                "Customize CS+",
+                "Customize CRS+",
                 FontAwesomeIcon.Snowflake, purple,
                 new[] { "theme", "halloween", "winter" }),
 
             new("In-Game File Browser",
                 "Trouble with file dialogs? Use the built-in browser. Great for Linux users.",
                 "Settings > Behavior",
-                "Customize CS+",
+                "Customize CRS+",
                 FontAwesomeIcon.FolderOpen, purple,
                 new[] { "file", "browser", "linux" }),
 
             // === Safety ===
             new("Auto Backups",
-                "CS+ backs up your config on updates and weekly. Your characters are safe!",
+                "CRS+ backs up your config on updates and weekly. Your characters are safe!",
                 "Settings > Backup & Restore",
                 "Backup & Safety",
                 FontAwesomeIcon.Shield, green,
@@ -416,7 +416,7 @@ public class FeaturesWindow : Window, IDisposable
                 new[] { "command", "quick", "switch" }),
 
             new("/selectrevert",
-                "Revert all CS+ changes (Glamourer, Customize+, Honorific).",
+                "Revert all CRS+ changes (Glamourer, Customize+, Honorific).",
                 "Chat",
                 "Chat Commands",
                 FontAwesomeIcon.Undo, slate,
@@ -551,7 +551,7 @@ public class FeaturesWindow : Window, IDisposable
         }
 
         // Title text - centered
-        var titleText = "Discover CS+ Features";
+        var titleText = "Discover CRS+ Features";
         ImGui.PushFont(UiBuilder.DefaultFont);
         ImGui.SetWindowFontScale(1.6f);
         var titleSize = ImGui.CalcTextSize(titleText);
@@ -738,7 +738,7 @@ public class FeaturesWindow : Window, IDisposable
             "Mod Management" => new Vector4(1.0f, 0.6f, 0.3f, 1.0f),
             "Capturing Looks" => new Vector4(0.3f, 0.9f, 0.9f, 1.0f),
             "Chat Commands" => new Vector4(0.6f, 0.7f, 0.85f, 1.0f),
-            "Customize CS+" => new Vector4(0.8f, 0.5f, 1.0f, 1.0f),
+            "Customize CRS+" => new Vector4(0.8f, 0.5f, 1.0f, 1.0f),
             "Backup & Safety" => new Vector4(0.5f, 0.9f, 0.6f, 1.0f),
             _ => new Vector4(0.7f, 0.7f, 0.7f, 1.0f)
         };

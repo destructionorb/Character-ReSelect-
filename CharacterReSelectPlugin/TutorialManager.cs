@@ -427,7 +427,7 @@ namespace CharacterReSelectPlugin
 
             ImGui.SetNextWindowFocus();
 
-            if (ImGui.Begin("Welcome to Character Select+ v1.2!", ImGuiWindowFlags.NoCollapse |
+            if (ImGui.Begin("Welcome to Character ReSelect+ v1.2!", ImGuiWindowFlags.NoCollapse |
                 ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove))
             {
                 // Icons
@@ -435,7 +435,7 @@ namespace CharacterReSelectPlugin
                 ImGui.Text("\uf005"); // Star icon
                 ImGui.PopFont();
                 ImGui.SameLine();
-                ImGui.TextColored(new Vector4(0.85f, 0.85f, 0.9f, 1.0f), "Welcome to Character Select+ v1.2!");
+                ImGui.TextColored(new Vector4(0.85f, 0.85f, 0.9f, 1.0f), "Welcome to Character ReSelect+ v1.2!");
 
                 ImGui.Spacing();
                 ImGui.Separator();
@@ -2194,7 +2194,7 @@ namespace CharacterReSelectPlugin
                 ImGui.SameLine();
                 ImGui.TextColored(new Vector4(0.9f, 0.7f, 0.3f, 1.0f), "Settings");
 
-                ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.75f, 1.0f), "Customize how Character Select+ works for you");
+                ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.75f, 1.0f), "Customize how Character ReSelect+ works for you");
                 ImGui.Spacing();
 
                 ImGui.PushFont(UiBuilder.IconFont);
@@ -2295,7 +2295,7 @@ namespace CharacterReSelectPlugin
                 ImGui.BulletText("Auto-apply behaviours - Character on login, Designs on job change");
                 ImGui.BulletText("Quick Switch compactness and visual feedback effects");
                 ImGui.BulletText("UI scaling and sorting preferences for the main window");
-                ImGui.BulletText("Immersive Dialogue options to use your CS+ Character's name and pronouns");
+                ImGui.BulletText("Immersive Dialogue options to use your CRS+ Character's name and pronouns");
 
                 ImGui.Spacing();
                 ImGui.PushFont(UiBuilder.IconFont);
@@ -2652,7 +2652,7 @@ namespace CharacterReSelectPlugin
                 ImGui.Spacing();
 
                 ImGui.PushTextWrapPos(ImGui.GetContentRegionAvail().X);
-                ImGui.TextColored(new Vector4(0.8f, 0.8f, 0.85f, 1.0f), "You've graduated from Character Select+ University! Your diploma includes mastery of:");
+                ImGui.TextColored(new Vector4(0.8f, 0.8f, 0.85f, 1.0f), "You've graduated from Character ReSelect+ University! Your diploma includes mastery of:");
                 ImGui.PopTextWrapPos();
 
                 ImGui.Spacing();

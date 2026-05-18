@@ -1027,7 +1027,7 @@ namespace CharacterReSelectPlugin.Windows.Components
 
                 // Linkable toggle - first so user decides the type before entering name
                 var isOwn = connection.IsOwnCharacter;
-                if (ImGui.Checkbox("Link to my CS+ character", ref isOwn))
+                if (ImGui.Checkbox("Link to my CRS+ character", ref isOwn))
                 {
                     connection.IsOwnCharacter = isOwn;
                     if (isOwn && AvailableCharacterNames.Count > 0)

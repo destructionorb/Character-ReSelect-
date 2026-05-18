@@ -485,7 +485,7 @@ namespace CharacterReSelectPlugin.Windows
             var target = plugin.GetCurrentTarget();
             if (target == null)
             {
-                Plugin.ChatGui.PrintError("[Character Select+] No target selected.");
+                Plugin.ChatGui.PrintError("[Character ReSelect+] No target selected.");
                 return;
             }
 

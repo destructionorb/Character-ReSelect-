@@ -560,7 +560,7 @@ namespace CharacterReSelectPlugin
 
             CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
             {
-                HelpMessage = "Opens the Character Select+ UI"
+                HelpMessage = "Opens the Character ReSelect+ UI"
             });
             CommandManager.AddHandler("/selectswitch", new CommandInfo(OnQuickSwitchCommand)
             {
@@ -633,7 +633,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[Character Select+] Usage: /sidle <0-6>");
+                    ChatGui.PrintError("[Character ReSelect+] Usage: /sidle <0-6>");
                 }
             })
             {
@@ -649,7 +649,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[Character Select+] Usage: /ssit <0–6>");
+                    ChatGui.PrintError("[Character ReSelect+] Usage: /ssit <0–6>");
                 }
             })
             {
@@ -665,7 +665,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[Character Select+] Usage: /sgroundsit <0–6>");
+                    ChatGui.PrintError("[Character ReSelect+] Usage: /sgroundsit <0–6>");
                 }
             })
             {
@@ -681,7 +681,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[Character Select+] Usage: /sdoze <0–6>");
+                    ChatGui.PrintError("[Character ReSelect+] Usage: /sdoze <0–6>");
                 }
             })
             {
@@ -695,13 +695,13 @@ namespace CharacterReSelectPlugin
 
             CommandManager.AddHandler("/selectrevert", new CommandInfo((_, _) => RevertAllChanges())
             {
-                HelpMessage = "Reverts all CS+ changes (Glamourer, Honorific, Moodles, Customize+, Penumbra collection)"
+                HelpMessage = "Reverts all CRS+ changes (Glamourer, Honorific, Moodles, Customize+, Penumbra collection)"
             });
 
             ClientState.Login += () =>
             {
                 lastAppliedCharacter = null;
-                Plugin.Log.Debug($"[Character Select+] Local character name: {RePlayerState.CharacterName}");
+                Plugin.Log.Debug($"[Character ReSelect+] Local character name: {RePlayerState.CharacterName}");
             };
 
             contextMenuManager = new ContextMenuManager(this, Plugin.ContextMenu);
@@ -862,7 +862,7 @@ namespace CharacterReSelectPlugin
             if (pendingVersionUpdateNotification)
             {
                 pendingVersionUpdateNotification = false;
-                ChatGui.Print($"[CS+] Updated to v{CurrentPluginVersion}! Type /select whatsnew to see new features.");
+                ChatGui.Print($"[CRS+] Updated to v{CurrentPluginVersion}! Type /select whatsnew to see new features.");
                 Plugin.Log.Info($"[VersionUpdate] Showed update notification for v{CurrentPluginVersion}");
             }
 
@@ -1010,7 +1010,7 @@ namespace CharacterReSelectPlugin
                     {
                         HasWarning = true,
                         Resolved = true,
-                        Message = "Your CS+ name is now visible to other players!"
+                        Message = "Your CRS+ name is now visible to other players!"
                     };
                 }
                 else if (result.NeedsReview)
@@ -1113,7 +1113,7 @@ namespace CharacterReSelectPlugin
             if (args.Equals("stop", StringComparison.OrdinalIgnoreCase))
             {
                 GalleryWindow.EmergencyStop();
-                ChatGui.Print("[Character Select+] Gallery emergency stop activated!");
+                ChatGui.Print("[Character ReSelect+] Gallery emergency stop activated!");
                 return;
             }
 
@@ -1635,7 +1635,7 @@ namespace CharacterReSelectPlugin
         {
             if (string.IsNullOrWhiteSpace(args))
             {
-                ChatGui.PrintError("[Character Select+] Usage: /select <Character Name> [Design], /select random [Name], /select jobchange on|off, /select idle|sit|groundsit|doze [0-6], /select mods, /select save [CR], or /select whatsnew");
+                ChatGui.PrintError("[Character ReSelect+] Usage: /select <Character Name> [Design], /select random [Name], /select jobchange on|off, /select idle|sit|groundsit|doze [0-6], /select mods, /select save [CR], or /select whatsnew");
                 return;
             }
 
@@ -1682,18 +1682,18 @@ namespace CharacterReSelectPlugin
                     {
                         Configuration.ReapplyDesignOnJobChange = true;
                         Configuration.Save();
-                        ChatGui.Print("[Character Select+] Reapply design on job change: Enabled");
+                        ChatGui.Print("[Character ReSelect+] Reapply design on job change: Enabled");
                         return;
                     }
                     else if (setting == "off")
                     {
                         Configuration.ReapplyDesignOnJobChange = false;
                         Configuration.Save();
-                        ChatGui.Print("[Character Select+] Reapply design on job change: Disabled");
+                        ChatGui.Print("[Character ReSelect+] Reapply design on job change: Disabled");
                         return;
                     }
                 }
-                ChatGui.PrintError("[Character Select+] Usage: /select jobchange on|off");
+                ChatGui.PrintError("[Character ReSelect+] Usage: /select jobchange on|off");
                 return;
             }
 
@@ -1711,12 +1711,12 @@ namespace CharacterReSelectPlugin
                             var charPtr = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)ObjectTable.LocalPlayer.Address;
                             var currentIdle = charPtr->EmoteController.CPoseState;
 
-                            ChatGui.Print($"[CS+] Current idle pose: {currentIdle} (range: 0-6)");
+                            ChatGui.Print($"[CRS+] Current idle pose: {currentIdle} (range: 0-6)");
                         }
                     }
                     else
                     {
-                        ChatGui.PrintError("[CS+] You must be logged in to check idle pose.");
+                        ChatGui.PrintError("[CRS+] You must be logged in to check idle pose.");
                     }
                 }
                 else if (idleArgs.Length >= 2 && byte.TryParse(idleArgs[1], out var poseIndex))
@@ -1727,7 +1727,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[CS+] Usage: /select idle [0-6]");
+                    ChatGui.PrintError("[CRS+] Usage: /select idle [0-6]");
                 }
                 return;
             }
@@ -1743,7 +1743,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[CS+] Usage: /select sit <0-6>");
+                    ChatGui.PrintError("[CRS+] Usage: /select sit <0-6>");
                 }
                 return;
             }
@@ -1759,7 +1759,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[CS+] Usage: /select groundsit <0-6>");
+                    ChatGui.PrintError("[CRS+] Usage: /select groundsit <0-6>");
                 }
                 return;
             }
@@ -1775,7 +1775,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[CS+] Usage: /select doze <0-6>");
+                    ChatGui.PrintError("[CRS+] Usage: /select doze <0-6>");
                 }
                 return;
             }
@@ -1812,7 +1812,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[Character Select+] Mod Manager is not available");
+                    ChatGui.PrintError("[Character ReSelect+] Mod Manager is not available");
                 }
                 return;
             }
@@ -1822,7 +1822,7 @@ namespace CharacterReSelectPlugin
             {
                 PatchNotesWindow.OpenMainMenuOnClose = false;
                 PatchNotesWindow.IsOpen = true;
-                ChatGui.Print("[CS+] Opening patch notes window...");
+                ChatGui.Print("[CRS+] Opening patch notes window...");
                 return;
             }
 
@@ -1834,7 +1834,7 @@ namespace CharacterReSelectPlugin
 
             if (matches.Length < 1)
             {
-                ChatGui.PrintError("[Character Select+] Invalid usage. Use /select <Character Name> [Design], /select random [Name], /select idle|sit|groundsit|doze [0-6], /select mods, /select save [CR], or /select whatsnew");
+                ChatGui.PrintError("[Character ReSelect+] Invalid usage. Use /select <Character Name> [Design], /select random [Name], /select idle|sit|groundsit|doze [0-6], /select mods, /select save [CR], or /select whatsnew");
                 return;
             }
 
@@ -1846,7 +1846,7 @@ namespace CharacterReSelectPlugin
 
             if (character == null)
             {
-                ChatGui.PrintError($"[Character Select+] Character '{characterName}' not found.");
+                ChatGui.PrintError($"[Character ReSelect+] Character '{characterName}' not found.");
                 return;
             }
 
@@ -1861,12 +1861,12 @@ namespace CharacterReSelectPlugin
                 if (design != null)
                 {
                     var designIndex = character.Designs.IndexOf(design);
-                    ChatGui.Print($"[Character Select+] Applied design '{designName}' to {character.Name}.");
+                    ChatGui.Print($"[Character ReSelect+] Applied design '{designName}' to {character.Name}.");
                     ApplyProfile(character, designIndex);
                 }
                 else
                 {
-                    ChatGui.PrintError($"[Character Select+] Design '{designName}' not found for {character.Name}.");
+                    ChatGui.PrintError($"[Character ReSelect+] Design '{designName}' not found for {character.Name}.");
                 }
             }
         }
@@ -1878,7 +1878,7 @@ namespace CharacterReSelectPlugin
             // Validate command structure: /select save [CR]
             if (parts.Length < 1 || !parts[0].Equals("save", StringComparison.OrdinalIgnoreCase))
             {
-                ChatGui.PrintError("[Character Select+] Usage: /select save [CR]");
+                ChatGui.PrintError("[Character ReSelect+] Usage: /select save [CR]");
                 return;
             }
             
@@ -1893,7 +1893,7 @@ namespace CharacterReSelectPlugin
                 }
                 else
                 {
-                    ChatGui.PrintError("[Character Select+] Conflict Resolution is not enabled in settings.");
+                    ChatGui.PrintError("[Character ReSelect+] Conflict Resolution is not enabled in settings.");
                     return;
                 }
             }
@@ -1928,12 +1928,12 @@ namespace CharacterReSelectPlugin
             if (currentCharacter == null && Characters.Count > 0)
             {
                 currentCharacter = Characters[0];
-                ChatGui.Print($"[Character Select+] Using first available character: {currentCharacter.Name}");
+                ChatGui.Print($"[Character ReSelect+] Using first available character: {currentCharacter.Name}");
             }
 
             if (currentCharacter == null)
             {
-                ChatGui.PrintError("[Character Select+] No Character Select+ profiles available. Create a character profile first.");
+                ChatGui.PrintError("[Character ReSelect+] No Character ReSelect+ profiles available. Create a character profile first.");
                 return;
             }
 
@@ -1946,7 +1946,7 @@ namespace CharacterReSelectPlugin
             }
             else
             {
-                ChatGui.PrintError("[Character Select+] Unable to access design panel for snapshot creation.");
+                ChatGui.PrintError("[Character ReSelect+] Unable to access design panel for snapshot creation.");
             }
         }
 
@@ -1956,7 +1956,7 @@ namespace CharacterReSelectPlugin
             {
                 try
                 {
-                    ChatGui.Print($"[Character Select+] Creating design '{designName}' for {character.Name}...");
+                    ChatGui.Print($"[Character ReSelect+] Creating design '{designName}' for {character.Name}...");
 
                     var newDesign = new CharacterDesign(
                         designName,
@@ -2000,17 +2000,17 @@ namespace CharacterReSelectPlugin
                     // Save configuration
                     Configuration.Save();
 
-                    ChatGui.Print($"[Character Select+] ✅ Design '{designName}' created successfully!");
+                    ChatGui.Print($"[Character ReSelect+] ✅ Design '{designName}' created successfully!");
                     
                     if (string.IsNullOrEmpty(glamourerData) && string.IsNullOrEmpty(customizePlusProfile))
                     {
-                        ChatGui.Print("[Character Select+] ⚠ No Glamourer or Customize+ state detected. You may need to manually configure the design.");
+                        ChatGui.Print("[Character ReSelect+] ⚠ No Glamourer or Customize+ state detected. You may need to manually configure the design.");
                     }
                 }
                 catch (Exception ex)
                 {
                     Log.Error($"Error creating snapshot design via command: {ex}");
-                    ChatGui.PrintError($"[Character Select+] Failed to create design: {ex.Message}");
+                    ChatGui.PrintError($"[Character ReSelect+] Failed to create design: {ex.Message}");
                 }
             });
         }
@@ -3323,7 +3323,7 @@ namespace CharacterReSelectPlugin
                 var profile = await DownloadProfileAsync(inGameName);
                 if (profile == null || profile.IsEmpty())
                 {
-                    ChatGui.Print($"[Character Select+] Could not find profile for {inGameName}.");
+                    ChatGui.Print($"[Character ReSelect+] Could not find profile for {inGameName}.");
                     return;
                 }
 
@@ -3356,7 +3356,7 @@ namespace CharacterReSelectPlugin
             catch (Exception ex)
             {
                 Log.Error($"[OpenLinkedProfileFromServer] Error fetching profile: {ex.Message}");
-                ChatGui.PrintError($"[Character Select+] Failed to fetch profile for {inGameName}.");
+                ChatGui.PrintError($"[Character ReSelect+] Failed to fetch profile for {inGameName}.");
             }
         }
 
@@ -3430,7 +3430,7 @@ namespace CharacterReSelectPlugin
         {
             if (string.IsNullOrWhiteSpace(args))
             {
-                ChatGui.PrintError("[Character Select+] Usage: /viewrp <Character Name>");
+                ChatGui.PrintError("[Character ReSelect+] Usage: /viewrp <Character Name>");
                 return;
             }
 
@@ -3452,7 +3452,7 @@ namespace CharacterReSelectPlugin
 
                 if (rawTarget == null)
                 {
-                    ChatGui.PrintError("[Character Select+] You are not targeting anything.");
+                    ChatGui.PrintError("[Character ReSelect+] You are not targeting anything.");
                     return;
                 }
 
@@ -3460,7 +3460,7 @@ namespace CharacterReSelectPlugin
 
                 if (rawTarget.ObjectKind != Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Pc)
                 {
-                    ChatGui.PrintError("[Character Select+] You must target a player.");
+                    ChatGui.PrintError("[Character ReSelect+] You must target a player.");
                     return;
                 }
 
@@ -3469,7 +3469,7 @@ namespace CharacterReSelectPlugin
 
                 if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(world))
                 {
-                    ChatGui.PrintError("[Character Select+] Could not resolve target's full name.");
+                    ChatGui.PrintError("[Character ReSelect+] Could not resolve target's full name.");
                     return;
                 }
 
@@ -3477,7 +3477,7 @@ namespace CharacterReSelectPlugin
             }
 
 
-            ChatGui.Print($"[Character Select+] Looking for {targetName}'s profile");
+            ChatGui.Print($"[Character ReSelect+] Looking for {targetName}'s profile");
 
             // Try to get local name first
             string? localName = RePlayerState.CharacterName;
@@ -3491,7 +3491,7 @@ namespace CharacterReSelectPlugin
 
                 if (character?.RPProfile == null || character.RPProfile.IsEmpty())
                 {
-                    ChatGui.PrintError($"[Character Select+] No RP profile set for {targetName}.");
+                    ChatGui.PrintError($"[Character ReSelect+] No RP profile set for {targetName}.");
                     return;
                 }
 
@@ -3508,7 +3508,7 @@ namespace CharacterReSelectPlugin
                                                            c.LastInGameName.Equals(localName, StringComparison.OrdinalIgnoreCase));
                 if (match == null || match.RPProfile == null || match.RPProfile.IsEmpty())
                 {
-                    ChatGui.PrintError("[DEBUG] No matching Character Select+ profile or RPProfile found.");
+                    ChatGui.PrintError("[DEBUG] No matching Character ReSelect+ profile or RPProfile found.");
                     return;
                 }
 
@@ -3526,16 +3526,16 @@ namespace CharacterReSelectPlugin
                 {
                     RPProfileViewer.SetExternalProfile(profile);
                     RPProfileViewer.IsOpen = true;
-                    ChatGui.Print($"[Character Select+] Received RP profile from {targetName}.");
+                    ChatGui.Print($"[Character ReSelect+] Received RP profile from {targetName}.");
                 }
                 else
                 {
-                    ChatGui.Print($"[Character Select+] {targetName} is currently not sharing their RP Profile or has not yet created one.");
+                    ChatGui.Print($"[Character ReSelect+] {targetName} is currently not sharing their RP Profile or has not yet created one.");
                 }
             }
             catch (Exception ex)
             {
-                ChatGui.PrintError($"[Character Select+] IPC request failed: {ex.Message}");
+                ChatGui.PrintError($"[Character ReSelect+] IPC request failed: {ex.Message}");
             }
         }
         public void SetActiveCharacter(Character character)
@@ -3604,11 +3604,11 @@ namespace CharacterReSelectPlugin
             {
                 RPProfileViewer.SetExternalProfile(profile);
                 RPProfileViewer.IsOpen = true;
-                ChatGui.Print($"[Character Select+] Received RP profile for {targetName}.");
+                ChatGui.Print($"[Character ReSelect+] Received RP profile for {targetName}.");
             }
             else
             {
-                ChatGui.Print($"[Character Select+] No shared RP profile found for {targetName}.");
+                ChatGui.Print($"[Character ReSelect+] No shared RP profile found for {targetName}.");
             }
         }
 
@@ -3841,7 +3841,7 @@ namespace CharacterReSelectPlugin
                     Content = form
                 };
 
-                Plugin.Log.Info($"[UploadProfile] Updating profile for CS+ character '{profile.CharacterName}' as physical character '{characterName}'");
+                Plugin.Log.Info($"[UploadProfile] Updating profile for CRS+ character '{profile.CharacterName}' as physical character '{characterName}'");
 
                 var response = await http.SendAsync(request);
 
@@ -3868,7 +3868,7 @@ namespace CharacterReSelectPlugin
                         }
                     }
 
-                    Plugin.Log.Info($"[UploadProfile] Successfully updated profile for CS+ character {profile.CharacterName} as {characterName}");
+                    Plugin.Log.Info($"[UploadProfile] Successfully updated profile for CRS+ character {profile.CharacterName} as {characterName}");
                 }
                 else
                 {
@@ -3938,7 +3938,7 @@ namespace CharacterReSelectPlugin
                 if (profile != null)
                 {
                     Plugin.Log.Debug($"[DownloadProfile] Downloaded profile");
-                    Plugin.Log.Debug($"[DownloadProfile] Profile belongs to CS+ character: {profile.CharacterName}");
+                    Plugin.Log.Debug($"[DownloadProfile] Profile belongs to CRS+ character: {profile.CharacterName}");
                     Plugin.Log.Debug($"[DownloadProfile] BackgroundImage: {profile.BackgroundImage ?? "null"}");
                     Plugin.Log.Debug($"[DownloadProfile] Effects: {(profile.Effects != null ? "present" : "null")}");
                     if (profile.Effects != null)
@@ -5032,16 +5032,16 @@ namespace CharacterReSelectPlugin
 
                 // 9. Chat feedback
                 var builder = new SeStringBuilder();
-                builder.AddText("[").AddBlue("CS+", true).AddText("] ");
+                builder.AddText("[").AddBlue("CRS+", true).AddText("] ");
                 builder.AddText("Reverted to default state");
                 ChatGui.Print(builder.BuiltString);
 
-                Log.Info("[RevertAllChanges] Successfully reverted all CS+ changes via IPC");
+                Log.Info("[RevertAllChanges] Successfully reverted all CRS+ changes via IPC");
             }
             catch (Exception ex)
             {
                 Log.Error($"[RevertAllChanges] Failed to revert: {ex.Message}");
-                ChatGui.PrintError("[CS+] Failed to revert some changes");
+                ChatGui.PrintError("[CRS+] Failed to revert some changes");
             }
         }
 
@@ -5139,14 +5139,14 @@ namespace CharacterReSelectPlugin
                 
                 // Create colored fallback message
                 var builder = new SeStringBuilder();
-                builder.AddText("[").AddBlue("Character Select+", true).AddText("] ");
+                builder.AddText("[").AddBlue("Character ReSelect+", true).AddText("] ");
                 builder.AddText("No favourite characters found, selecting from ").AddBlue("all characters", false).AddText(".");
                 ChatGui.Print(builder.BuiltString);
             }
 
             if (availableCharacters.Count == 0)
             {
-                ChatGui.PrintError("[Character Select+] No characters available for random selection.");
+                ChatGui.PrintError("[Character ReSelect+] No characters available for random selection.");
                 return;
             }
 
@@ -5291,7 +5291,7 @@ namespace CharacterReSelectPlugin
             var character = Characters.FirstOrDefault(c => c.Name.Equals(characterName, StringComparison.OrdinalIgnoreCase));
             if (character == null)
             {
-                ChatGui.PrintError($"[Character Select+] Character '{characterName}' not found.");
+                ChatGui.PrintError($"[Character ReSelect+] Character '{characterName}' not found.");
                 return;
             }
 
@@ -5321,7 +5321,7 @@ namespace CharacterReSelectPlugin
 
             if (availableDesigns.Count == 0)
             {
-                ChatGui.PrintError($"[Character Select+] No designs available for character '{characterName}'.");
+                ChatGui.PrintError($"[Character ReSelect+] No designs available for character '{characterName}'.");
                 return;
             }
 
@@ -5385,7 +5385,7 @@ namespace CharacterReSelectPlugin
         {
             if (group.CharacterNames.Count == 0)
             {
-                ChatGui.PrintError($"[Character Select+] Group '{group.Name}' has no characters.");
+                ChatGui.PrintError($"[Character ReSelect+] Group '{group.Name}' has no characters.");
                 return;
             }
 
@@ -5396,7 +5396,7 @@ namespace CharacterReSelectPlugin
 
             if (groupCharacters.Count == 0)
             {
-                ChatGui.PrintError($"[Character Select+] No valid characters found in group '{group.Name}'.");
+                ChatGui.PrintError($"[Character ReSelect+] No valid characters found in group '{group.Name}'.");
                 return;
             }
 
@@ -5499,7 +5499,7 @@ namespace CharacterReSelectPlugin
             if (isHalloween)
             {
                 // Add purple plugin prefix for Halloween
-                builder.AddText("[").AddPurple("Character Select+", true).AddText("] ");
+                builder.AddText("[").AddPurple("Character ReSelect+", true).AddText("] ");
                 
                 // Halloween themed messages with purple text and white character names
                 var halloweenMessages = new System.Action<SeStringBuilder, string>[]
@@ -5530,7 +5530,7 @@ namespace CharacterReSelectPlugin
             else if (isWinterChristmas)
             {
                 // Add silver/white plugin prefix for Winter/Christmas
-                builder.AddText("[").AddWhite("Character Select+", true).AddText("] ");
+                builder.AddText("[").AddWhite("Character ReSelect+", true).AddText("] ");
                 
                 // Winter/Christmas themed messages with blue text and white character names
                 var winterMessages = new System.Action<SeStringBuilder, string>[]
@@ -5574,7 +5574,7 @@ namespace CharacterReSelectPlugin
             else
             {
                 // Add blue plugin prefix for normal
-                builder.AddText("[").AddBlue("Character Select+", true).AddText("] ");
+                builder.AddText("[").AddBlue("Character ReSelect+", true).AddText("] ");
                 
                 // Normal themed messages with blue text and white character names
                 var normalMessages = new System.Action<SeStringBuilder, string>[]
@@ -6354,7 +6354,7 @@ namespace CharacterReSelectPlugin
                 
                 if (targetObject == null)
                 {
-                    ChatGui.PrintError("[Character Select+] No valid target selected.");
+                    ChatGui.PrintError("[Character ReSelect+] No valid target selected.");
                     return false;
                 }
                 
@@ -6364,7 +6364,7 @@ namespace CharacterReSelectPlugin
             catch (Exception ex)
             {
                 Log.Error($"Error applying character to target: {ex}");
-                ChatGui.PrintError($"[Character Select+] Failed to apply to target: {ex.Message}");
+                ChatGui.PrintError($"[Character ReSelect+] Failed to apply to target: {ex.Message}");
                 return false;
             }
         }
@@ -6550,7 +6550,7 @@ namespace CharacterReSelectPlugin
                 
                 if (!validTypes.Contains(objectKind))
                 {
-                    ChatGui.PrintError($"[Character Select+] Invalid target type: {objectKind}");
+                    ChatGui.PrintError($"[Character ReSelect+] Invalid target type: {objectKind}");
                     return false;
                 }
                 
@@ -6561,7 +6561,7 @@ namespace CharacterReSelectPlugin
                     if (timeSinceLastApplication < minimumTargetApplicationInterval)
                     {
                         var waitTime = minimumTargetApplicationInterval - timeSinceLastApplication;
-                        ChatGui.PrintError($"[Character Select+] Please wait {waitTime.TotalSeconds:F1} seconds between target applications to prevent crashes");
+                        ChatGui.PrintError($"[Character ReSelect+] Please wait {waitTime.TotalSeconds:F1} seconds between target applications to prevent crashes");
                         return false;
                     }
                 }
@@ -6572,7 +6572,7 @@ namespace CharacterReSelectPlugin
                 // Comprehensive safety validation before any modifications
                 if (!await ValidateTargetObjectSafety(objectIndex, targetName))
                 {
-                    ChatGui.PrintError($"[Character Select+] Target object validation failed - cannot apply safely");
+                    ChatGui.PrintError($"[Character ReSelect+] Target object validation failed - cannot apply safely");
                     return false;
                 }
                 
@@ -6605,7 +6605,7 @@ namespace CharacterReSelectPlugin
             catch (Exception ex)
             {
                 Log.Error($"Error applying character to target: {ex}");
-                ChatGui.PrintError($"[Character Select+] Failed to apply to target: {ex.Message}");
+                ChatGui.PrintError($"[Character ReSelect+] Failed to apply to target: {ex.Message}");
                 return false;
             }
         }

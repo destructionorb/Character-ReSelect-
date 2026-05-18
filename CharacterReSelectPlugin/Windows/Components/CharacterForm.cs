@@ -289,7 +289,7 @@ namespace CharacterReSelectPlugin.Windows.Components
 
                 if (IsEditWindowOpen) editedCharacterColor = tempColor;
                 else plugin.NewCharacterColor = tempColor;
-            }, "Affects your character's nameplate under their profile picture in Character Select+.", scale);
+            }, "Affects your character's nameplate under their profile picture in Character ReSelect+.", scale);
 
             ImGui.Separator();
 
@@ -1060,7 +1060,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             {
                 ImGui.BeginTooltip();
                 ImGui.PushTextWrapPos(300 * scale);
-                ImGui.TextUnformatted("Sets your character's idle pose (0–6).\nChoose 'None' if you don't want Character Select+ to change your idle.");
+                ImGui.TextUnformatted("Sets your character's idle pose (0–6).\nChoose 'None' if you don't want Character ReSelect+ to change your idle.");
                 ImGui.PopTextWrapPos();
                 ImGui.EndTooltip();
             }
@@ -2232,7 +2232,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                             // Green success message
                             var msg = new DalamudSeStringBuilder()
                                 .AddText("[")
-                                .AddGreen("CS+", true)
+                                .AddGreen("CRS+", true)
                                 .AddText("] ")
                                 .AddGreen(result.Message, false)
                                 .Build();
@@ -2243,7 +2243,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                             // Yellow pending message
                             var msg = new DalamudSeStringBuilder()
                                 .AddText("[")
-                                .AddYellow("CS+", true)
+                                .AddYellow("CRS+", true)
                                 .AddText("] ")
                                 .AddYellow(result.Message, false)
                                 .Build();

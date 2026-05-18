@@ -2395,7 +2395,7 @@ namespace CharacterReSelectPlugin.Windows
                 "Likes & Dislikes" => "Things your character enjoys or avoids",
                 "External Links" => "Links to wikis, playlists, or other character resources",
                 "Quick List" => "Bullet points for skills, abilities, or quick facts",
-                "Connections" => "Relationships to your other CS+ characters",
+                "Connections" => "Relationships to your other CRS+ characters",
 
                 _ => "Custom content section"
             };

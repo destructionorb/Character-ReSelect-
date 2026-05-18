@@ -46,7 +46,7 @@ namespace CharacterReSelectPlugin.Windows
             public string ImagePath;
         }
 
-        public PatchNotesWindow(Plugin plugin) : base("Character Select+ – What's New?",
+        public PatchNotesWindow(Plugin plugin) : base("Character ReSelect+ – What's New?",
             ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoTitleBar)
         {
             this.plugin = plugin;
@@ -169,7 +169,7 @@ namespace CharacterReSelectPlugin.Windows
 
             ImGui.SetCursorPos(new Vector2(20, 15));
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.95f, 0.95f, 0.95f, 1.0f));
-            ImGui.Text("Character Select+ – What's New?");
+            ImGui.Text("Character ReSelect+ – What's New?");
             ImGui.PopStyleColor();
 
             ImGui.SetCursorPos(new Vector2(20, 35));
@@ -206,7 +206,7 @@ namespace CharacterReSelectPlugin.Windows
                 {
                     Icon = FontAwesomeIcon.User,
                     Title = "Name Sync",
-                    Description = "Show your CS+ name in chat, nameplates, and party list",
+                    Description = "Show your CRS+ name in chat, nameplates, and party list",
                     ActionLabel = "Open Settings",
                     OnClick = () => plugin.OpenSettingsToSection("Name Sync"),
                     ImagePath = "NameSync.png"
@@ -224,7 +224,7 @@ namespace CharacterReSelectPlugin.Windows
                 {
                     Icon = FontAwesomeIcon.Palette,
                     Title = "Custom Themes",
-                    Description = "Personalize CS+ with colours, images, and icons",
+                    Description = "Personalize CRS+ with colours, images, and icons",
                     ActionLabel = "Open Settings",
                     OnClick = () => plugin.OpenSettingsToSection("Visual Settings"),
                     ImagePath = "MainWindow.png"
@@ -497,14 +497,14 @@ namespace CharacterReSelectPlugin.Windows
         {
             // Name Sync
             DrawFeatureSection("\uf007", "Name Sync", new Vector4(0.6f, 0.9f, 1.0f, 1.0f));
-            ImGui.BulletText("Show your CS+ character's name instead of your in-game name across the UI");
+            ImGui.BulletText("Show your CRS+ character's name instead of your in-game name across the UI");
             ImGui.BulletText("Your name appears in nameplates with an animated wave glow effect in your chosen colour");
-            ImGui.BulletText("Works in chat messages -- your CS+ name shows as the sender for tells, party, FC, and more");
-            ImGui.BulletText("The party list displays your CS+ name");
-            ImGui.BulletText("Target bar shows your CS+ name, including when you're someone's target-of-target");
+            ImGui.BulletText("Works in chat messages -- your CRS+ name shows as the sender for tells, party, FC, and more");
+            ImGui.BulletText("The party list displays your CRS+ name");
+            ImGui.BulletText("Target bar shows your CRS+ name, including when you're someone's target-of-target");
             ImGui.BulletText("Optional: Hide your Free Company tag from your nameplate");
-            ImGui.BulletText("Glow colour is based on your CS+ Character's nameplate colour to make your name stand out");
-            ImGui.BulletText("Shared Name Sync: See other CS+ users' custom names");
+            ImGui.BulletText("Glow colour is based on your CRS+ Character's nameplate colour to make your name stand out");
+            ImGui.BulletText("Shared Name Sync: See other CRS+ users' custom names");
             ImGui.BulletText("Privacy-first: Both you AND other users must opt-in to see each other's names");
             ImGui.Spacing();
 
@@ -521,7 +521,7 @@ namespace CharacterReSelectPlugin.Windows
 
             // Custom Themes
             DrawFeatureSection("\uf53f", "Custom Themes", new Vector4(0.9f, 0.7f, 0.2f, 1.0f));
-            ImGui.BulletText("Personalize every part of your CS+ window - make it truly yours");
+            ImGui.BulletText("Personalize every part of your CRS+ window - make it truly yours");
             ImGui.BulletText("Customize colours for backgrounds, buttons, headers, tabs, text, scrollbars, and more");
             ImGui.BulletText("Add a custom background image to your main window with opacity and positioning controls");
             ImGui.BulletText("Zoom and pan your background image to frame it perfectly");
@@ -576,7 +576,7 @@ namespace CharacterReSelectPlugin.Windows
 
             // Mod Deletion Warning
             DrawFeatureSection("\uf071", "Mod Deletion Warning", new Vector4(1.0f, 0.7f, 0.3f, 1.0f));
-            ImGui.BulletText("CS+ now warns you when a mod is deleted that was used in a Character or Design");
+            ImGui.BulletText("CRS+ now warns you when a mod is deleted that was used in a Character or Design");
             ImGui.BulletText("Shows which characters and designs are affected so you can update them");
             ImGui.BulletText("Helps prevent broken Conflict Resolution configurations from deleted mods");
             ImGui.Spacing();
@@ -589,7 +589,7 @@ namespace CharacterReSelectPlugin.Windows
             ImGui.BulletText("Fixed duplicate chat messages appearing when using certain features");
             ImGui.BulletText("Fixed Advanced Mode macro settings resetting unexpectedly");
             ImGui.BulletText("Added an option to remember open/close state of the Main Window in Settings  → Behavior");
-            ImGui.BulletText("Toggles for: View RP Profile, Report CS+ Name, Block CS+ User to appear in Context Menus. Found in Settings  → Behavior");
+            ImGui.BulletText("Toggles for: View RP Profile, Report CRS+ Name, Block CRS+ User to appear in Context Menus. Found in Settings  → Behavior");
             ImGui.Spacing();
         }
 
@@ -650,12 +650,12 @@ namespace CharacterReSelectPlugin.Windows
             ImGui.BulletText("Save complete mod configurations per design including enabled mods, mod settings, and option selections");
             ImGui.BulletText("Intelligent Mod Manager with 21+ categories (Hair, Gear, Bodies, VFX, Animations, etc.) for easy organization");
             ImGui.BulletText("Automatically categorizes and tracks mod additions, deletions, and changes -- no manual upkeep required");
-            ImGui.BulletText("Optional opt-in feature available in CS+ settings when you're ready to explore advanced mod management");
+            ImGui.BulletText("Optional opt-in feature available in CRS+ settings when you're ready to explore advanced mod management");
             ImGui.Spacing();
 
             // Enhanced IPC API
             DrawFeatureSection("\uf0c1", "API / IPC", new Vector4(0.6f, 0.9f, 1.0f, 1.0f));
-            ImGui.BulletText("API endpoints for other plugins to integrate with CS+");
+            ImGui.BulletText("API endpoints for other plugins to integrate with CRS+");
             ImGui.BulletText("Character switching, design management, and event notifications");
             ImGui.BulletText("Used internally for Conflict Resolution, improved Apply to Target functionality, and the Snapshot feature");
             ImGui.BulletText("Real-time character change events for plugin synchronization");
@@ -670,9 +670,9 @@ namespace CharacterReSelectPlugin.Windows
 
             // Snapshot
             DrawFeatureSection("\uf030", "Snapshot Feature", new Vector4(0.9f, 0.7f, 1.0f, 1.0f));
-            ImGui.BulletText("New Snapshot feature - one-click add Design to Character Select+");
+            ImGui.BulletText("New Snapshot feature - one-click add Design to Character ReSelect+");
             ImGui.BulletText("Use after saving a Design in Glamourer and setting up your Customize+ Profile");
-            ImGui.BulletText("Instantly adds your current look as a Design to the active Character in CS+");
+            ImGui.BulletText("Instantly adds your current look as a Design to the active Character in CRS+");
             ImGui.BulletText("Includes your current Customize+ Profile automatically");
             ImGui.BulletText("CR mode: Auto-configures mods for your current outfit when using Conflict Resolution");
             ImGui.BulletText("Simple workflow: Click camera button in Design Panel or use chat command");
@@ -681,7 +681,7 @@ namespace CharacterReSelectPlugin.Windows
 
             // UI Scaling
             DrawFeatureSection("\uf00e", "UI Scaling Done Right", new Vector4(0.6f, 0.9f, 1.0f, 1.0f));
-            ImGui.BulletText("Character Select+ is now properly responsive to the user's resolution and Dalamud's Global Font Scaling.");
+            ImGui.BulletText("Character ReSelect+ is now properly responsive to the user's resolution and Dalamud's Global Font Scaling.");
             ImGui.BulletText("Removed UI scaling options in Settings Panel.");
             ImGui.BulletText("Let me know if there are any issues using this.");
             ImGui.Spacing();
@@ -689,7 +689,7 @@ namespace CharacterReSelectPlugin.Windows
             // Penumbra Collection UI Sync
             DrawFeatureSection("\uf021", "Penumbra Collection Synchronization", new Vector4(0.8f, 0.9f, 0.6f, 1.0f));
             ImGui.BulletText("Switching characters now updates Penumbra's UI to show the correct collection");
-            ImGui.BulletText("Seamless integration between CS+ character switching and Penumbra interface");
+            ImGui.BulletText("Seamless integration between CRS+ character switching and Penumbra interface");
             ImGui.BulletText("Eliminates confusion about which collection is currently active");
             ImGui.Spacing();
 
@@ -720,7 +720,7 @@ namespace CharacterReSelectPlugin.Windows
         {
             // Character Gallery (NEW!)
             DrawFeatureSection("\uf302", "Character Gallery", new Vector4(0.9f, 0.6f, 0.9f, 1.0f));
-            ImGui.BulletText("View and share your CS+ Characters with everyone else!");
+            ImGui.BulletText("View and share your CRS+ Characters with everyone else!");
             ImGui.BulletText("Opt-in feature - choose your main physical character to represent you");
             ImGui.BulletText("Shows recent activity status with green globe indicators");
             ImGui.BulletText("Like,favourite,add or even block other players' characters");
@@ -745,12 +745,12 @@ namespace CharacterReSelectPlugin.Windows
 
             // Immersive Dialogue (NEW!)
             DrawFeatureSection("\uf075", "Immersive Dialogue System", new Vector4(0.9f, 0.6f, 0.9f, 1.0f));
-            ImGui.BulletText("NPCs now use your CS+ Character's name, pronouns, and desired titles in dialogue!");
+            ImGui.BulletText("NPCs now use your CRS+ Character's name, pronouns, and desired titles in dialogue!");
             ImGui.BulletText("Integration with he/him, she/her, and they/them pronouns");
             ImGui.BulletText("Granular settings: enable names, pronouns, gendered terms, or race separately");
             ImGui.BulletText("Customizable they/them neutral titles: friend, Mx., traveler, adventurer, or choose your own!");
             ImGui.BulletText("Only affects dialogue referring to your character - NPCs keep their own pronouns");
-            ImGui.BulletText("Requires an active CS+ character with RP Profile pronouns set");
+            ImGui.BulletText("Requires an active CRS+ character with RP Profile pronouns set");
             ImGui.BulletText("If you find any instances in which it doesn't seem to be working please report them in the discord!");
             ImGui.Spacing();
 
@@ -790,23 +790,23 @@ namespace CharacterReSelectPlugin.Windows
             // Random Character + Outfit (NEW!)
             DrawFeatureSection("\uf074", "Random Character & Outfit", new Vector4(0.6f, 0.9f, 1.0f, 1.0f));
             ImGui.BulletText("New 'Random' button for spontaneous character switching");
-            ImGui.BulletText("Randomly picks from your CS+ Characters and their Designs");
+            ImGui.BulletText("Randomly picks from your CRS+ Characters and their Designs");
             ImGui.BulletText("Setting to limit random selection to only favourited items");
             ImGui.Spacing();
 
             // Main CS+ Character (NEW!)
-            DrawFeatureSection("\uf521", "Main CS+ Character", new Vector4(0.9f, 0.6f, 0.9f, 1.0f));
-            ImGui.BulletText("Designate your main CS+ Character with a crown indicator");
+            DrawFeatureSection("\uf521", "Main CRS+ Character", new Vector4(0.9f, 0.6f, 0.9f, 1.0f));
+            ImGui.BulletText("Designate your main CRS+ Character with a crown indicator");
             ImGui.BulletText("Crown display is optional - toggle in settings");
             ImGui.BulletText("'Reapply on Login' can be set to only apply your Main Character");
             ImGui.Spacing();
 
             // Character Assignments (NEW!)
             DrawFeatureSection("\uf0c1", "Character Assignments", new Vector4(0.6f, 1.0f, 0.8f, 1.0f));
-            ImGui.BulletText("Assign specific CS+ Characters to specific in-game characters");
-            ImGui.BulletText("Auto-apply designated CS+ characters when logging into assigned real characters");
+            ImGui.BulletText("Assign specific CRS+ Characters to specific in-game characters");
+            ImGui.BulletText("Auto-apply designated CRS+ characters when logging into assigned real characters");
             ImGui.BulletText("Dropdown selection from characters the plugin has seen before");
-            ImGui.BulletText("Multiple real characters can share the same CS+ character");
+            ImGui.BulletText("Multiple real characters can share the same CRS+ character");
             ImGui.BulletText("Takes priority over 'last used' system but respects Main Character Only Mode");
             ImGui.BulletText("Perfect for players with multiple alts who want consistent character setups");
             ImGui.Spacing();
@@ -815,7 +815,7 @@ namespace CharacterReSelectPlugin.Windows
             DrawFeatureSection("\uf0e7", "Quick Character Switch Updates", new Vector4(0.6f, 0.9f, 1.0f, 1.0f));
             ImGui.BulletText("Now remembers your last used character like Apply on Login");
             ImGui.BulletText("Ready to go when you log in as that character");
-            ImGui.BulletText("Will also switch to be on your current CS+ Character if applied through other methods");
+            ImGui.BulletText("Will also switch to be on your current CRS+ Character if applied through other methods");
             ImGui.Spacing();
 
             // Bug Fixes & QoL
@@ -832,7 +832,7 @@ namespace CharacterReSelectPlugin.Windows
             // Apply Character on Login
             DrawFeatureSection("\uf4fc", "Apply Character on Login", new Vector4(0.6f, 0.9f, 1.0f, 1.0f));
             ImGui.BulletText("New opt-in setting in the plugin options.");
-            ImGui.BulletText("Character Select+ will remember the last applied character.");
+            ImGui.BulletText("Character ReSelect+ will remember the last applied character.");
             ImGui.BulletText("Next time you log in, it will automatically apply that character.");
             ImGui.BulletText("⚠️ May conflict if you are using Glamourer Automations.");
             ImGui.Spacing();
@@ -840,7 +840,7 @@ namespace CharacterReSelectPlugin.Windows
             // Apply Appearance on Job Change
             DrawFeatureSection("\uf4fc", "Apply Appearance on Job Change", new Vector4(0.6f, 0.9f, 1.0f, 1.0f));
             ImGui.BulletText("New opt-in setting in the plugin options.");
-            ImGui.BulletText("Character Select+ will remember the last applied character and/or design.");
+            ImGui.BulletText("Character ReSelect+ will remember the last applied character and/or design.");
             ImGui.BulletText("When you switch between jobs, it will automatically apply that character/design.");
             ImGui.BulletText("⚠️ WILL 100 percent conflict if you are using Glamourer Automations.");
             ImGui.Spacing();
@@ -921,7 +921,7 @@ namespace CharacterReSelectPlugin.Windows
 
             // Apply to Target
             DrawFeatureSection("\uf140", "Right-click → Apply to Target", new Vector4(0.6f, 0.9f, 1.0f, 1.0f));
-            ImGui.BulletText("Right-click a character in Character Select+ with a target selected.");
+            ImGui.BulletText("Right-click a character in Character ReSelect+ with a target selected.");
             ImGui.BulletText("Apply their setup — or even one of their individual designs — to the target.");
             ImGui.Spacing();
 
@@ -949,7 +949,7 @@ namespace CharacterReSelectPlugin.Windows
                 ImGui.Spacing();
 
                 // Center the checkbox area
-                string checkboxText = "I understand that RP Profiles and CS+ Names may contain mature content";
+                string checkboxText = "I understand that RP Profiles and CRS+ Names may contain mature content";
                 float checkboxWidth = ImGui.CalcTextSize(checkboxText).X + 30 * totalScale; // checkbox + text
                 ImGui.SetCursorPosX((windowWidth - checkboxWidth) * 0.5f);
 
@@ -1121,7 +1121,7 @@ namespace CharacterReSelectPlugin.Windows
         //     ImGui.TextColored(new Vector4(0.9f, 0.95f, 1.0f, 1.0f), "\uf2dc"); // FontAwesome snowflake
         //     ImGui.PopFont();
         //     ImGui.SameLine();
-        //     ImGui.TextColored(new Vector4(0.2f, 0.8f, 1.0f, 1.0f), " Happy Holidays from Character Select+ ");
+        //     ImGui.TextColored(new Vector4(0.2f, 0.8f, 1.0f, 1.0f), " Happy Holidays from Character ReSelect+ ");
         //     ImGui.SameLine();
         //     ImGui.PushFont(UiBuilder.IconFont);
         //     ImGui.TextColored(new Vector4(0.9f, 0.95f, 1.0f, 1.0f), "\uf2dc"); // FontAwesome snowflake
@@ -1132,7 +1132,7 @@ namespace CharacterReSelectPlugin.Windows
         //     // Holiday message and thank you - conversational style
         //     ImGui.PushTextWrapPos();
         //     ImGui.TextColored(new Vector4(0.9f, 0.95f, 1.0f, 1.0f),
-        //         "Season's greetings, adventurers! As we wrap up an amazing year, I wanted to take a moment to say thank you to everyone who has been enjoying Character Select+. " +
+        //         "Season's greetings, adventurers! As we wrap up an amazing year, I wanted to take a moment to say thank you to everyone who has been enjoying Character ReSelect+. " +
         //         "Your feedback, suggestions, and support have made this plugin what it is today. Whether you're creating new characters, perfecting your designs, or exploring the latest features, " +
         //         "you're the reason I love working on this project. Wishing you all a wonderful holiday season filled with joy, creativity, and fantastic adventures in FFXIV!");
         //     ImGui.PopTextWrapPos();

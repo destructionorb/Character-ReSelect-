@@ -95,8 +95,8 @@ public class WarningModalWindow : Window, IDisposable
             ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 12 * scale);
 
             string title = currentWarning.Status == "permaban"
-                ? "CS+ Names Feature Disabled"
-                : "CS+ Name Warning";
+                ? "CRS+ Names Feature Disabled"
+                : "CRS+ Name Warning";
 
             ImGui.PushStyleColor(ImGuiCol.Text, accentColor);
             CenterText(title, windowWidth, 1.2f);
@@ -113,7 +113,7 @@ public class WarningModalWindow : Window, IDisposable
             ImGui.Spacing();
 
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.7f, 0.7f, 0.7f, 1.0f));
-            CenterText("Your CS+ name has been reported and hidden:", windowWidth, 1.0f);
+            CenterText("Your CRS+ name has been reported and hidden:", windowWidth, 1.0f);
             ImGui.PopStyleColor();
 
             ImGui.Spacing();
@@ -128,14 +128,14 @@ public class WarningModalWindow : Window, IDisposable
             if (currentWarning.Status == "permaban")
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.7f, 0.7f, 0.7f, 1.0f));
-                CenterText("Due to repeated violations, your CS+ name", windowWidth, 1.0f);
+                CenterText("Due to repeated violations, your CRS+ name", windowWidth, 1.0f);
                 CenterText("will no longer be visible to other players.", windowWidth, 1.0f);
                 ImGui.PopStyleColor();
             }
             else
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.75f, 0.8f, 0.9f, 1.0f));
-                CenterText("Change your CS+ name to restore visibility.", windowWidth, 1.0f);
+                CenterText("Change your CRS+ name to restore visibility.", windowWidth, 1.0f);
                 ImGui.PopStyleColor();
 
                 if (currentWarning.Status == "warning2")

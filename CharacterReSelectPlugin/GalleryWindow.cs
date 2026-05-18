@@ -1483,7 +1483,7 @@ namespace CharacterReSelectPlugin.Windows
                 ImGui.TextWrapped("Choose which physical character represents you in the public gallery. Only this character will appear in the gallery, preventing duplicates.");
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip("This determines which physical character name appears in the gallery.\nYour CS+ character profiles can still be applied to any physical character,\nbut only your chosen main will be visible to others in the gallery.");
+                    ImGui.SetTooltip("This determines which physical character name appears in the gallery.\nYour CRS+ character profiles can still be applied to any physical character,\nbut only your chosen main will be visible to others in the gallery.");
                 }
 
                 var currentMain = plugin.Configuration.GalleryMainCharacter;
@@ -1581,10 +1581,10 @@ namespace CharacterReSelectPlugin.Windows
             var activeCharacter = GetActiveCharacter();
             if (activeCharacter != null)
             {
-                DrawSettingsSection($"Settings for CS+ Character: {activeCharacter.Name}", scale, () => {
+                DrawSettingsSection($"Settings for CRS+ Character: {activeCharacter.Name}", scale, () => {
                     var currentSharing = activeCharacter.RPProfile?.Sharing ?? ProfileSharing.AlwaysShare;
 
-                    if (ImGui.RadioButton("Don't share this CS+ character", currentSharing == ProfileSharing.NeverShare))
+                    if (ImGui.RadioButton("Don't share this CRS+ character", currentSharing == ProfileSharing.NeverShare))
                     {
                         SetCharacterSharing(activeCharacter, ProfileSharing.NeverShare);
                     }
@@ -1601,7 +1601,7 @@ namespace CharacterReSelectPlugin.Windows
 
                     if (currentSharing == ProfileSharing.ShowcasePublic && string.IsNullOrEmpty(plugin.Configuration.GalleryMainCharacter))
                     {
-                        ImGui.TextColored(new Vector4(1.0f, 0.7f, 0.4f, 1.0f), "⚠ This CS+ character won't appear in gallery without a main character selected above");
+                        ImGui.TextColored(new Vector4(1.0f, 0.7f, 0.4f, 1.0f), "⚠ This CRS+ character won't appear in gallery without a main character selected above");
                     }
                 });
 
@@ -1609,10 +1609,10 @@ namespace CharacterReSelectPlugin.Windows
                 if (activeCharacter.RPProfile?.Sharing == ProfileSharing.ShowcasePublic)
                 {
                     DrawSettingsSection($"Gallery Status Message for '{activeCharacter.Name}'", scale, () => {
-                        ImGui.TextWrapped("Set a custom message for this CS+ character to display in the gallery instead of their bio. Think of it like a quote, lyric, or current mood.");
+                        ImGui.TextWrapped("Set a custom message for this CRS+ character to display in the gallery instead of their bio. Think of it like a quote, lyric, or current mood.");
                         if (ImGui.IsItemHovered())
                         {
-                            ImGui.SetTooltip("This is specific to the CS+ character you currently have selected.\nThis is NOT your online/offline status - it's a custom message that shows in gallery cards.\nLeave empty to show your bio instead.");
+                            ImGui.SetTooltip("This is specific to the CRS+ character you currently have selected.\nThis is NOT your online/offline status - it's a custom message that shows in gallery cards.\nLeave empty to show your bio instead.");
                         }
 
                         string currentStatus = activeCharacter.GalleryStatus ?? "";
@@ -1792,7 +1792,7 @@ namespace CharacterReSelectPlugin.Windows
 
             if (options.Count == 0)
             {
-                Plugin.Log.Warning("[Gallery] No physical character options found. You may need to apply a CS+ profile first to populate the list.");
+                Plugin.Log.Warning("[Gallery] No physical character options found. You may need to apply a CRS+ profile first to populate the list.");
             }
 
             return options.Distinct().OrderBy(x => x).ToList();
@@ -2826,7 +2826,7 @@ namespace CharacterReSelectPlugin.Windows
             string? existingLikerCharacter = GetWhichOfMyCharactersLikedProfile(characterId);
             bool isCurrentlyLiked = existingLikerCharacter != null;
 
-            Plugin.Log.Info($"[Like Debug] CS+ Character: {csCharacterKey}");
+            Plugin.Log.Info($"[Like Debug] CRS+ Character: {csCharacterKey}");
             Plugin.Log.Info($"[Like Debug] CharacterId passed: {SanitizeForLogging(characterId)}");
             Plugin.Log.Info($"[Like Debug] Target Profile Name: {stableLikeTarget}");
             Plugin.Log.Info($"[Like Debug] Currently Liked by: {existingLikerCharacter ?? "None"}");
@@ -2860,7 +2860,7 @@ namespace CharacterReSelectPlugin.Windows
                     request.Headers.Add("X-Character-Key", csCharacterKey);
 
                     Plugin.Log.Info($"[Like Debug] HTTP {method} to gallery like endpoint");
-                    Plugin.Log.Info($"[Like Debug] Using CS+ Character: {csCharacterKey}");
+                    Plugin.Log.Info($"[Like Debug] Using CRS+ Character: {csCharacterKey}");
 
                     var response = await httpClient.SendAsync(request);
 
@@ -4062,7 +4062,7 @@ namespace CharacterReSelectPlugin.Windows
                     var userCharacterNames = plugin.Characters.Select(c => c.Name).ToHashSet();
 
                     Plugin.Log.Debug($"[Gallery] User main character: {userMain ?? "None"}");
-                    Plugin.Log.Debug($"[Gallery] User CS+ characters: {string.Join(", ", userCharacterNames)}");
+                    Plugin.Log.Debug($"[Gallery] User CRS+ characters: {string.Join(", ", userCharacterNames)}");
                     Plugin.Log.Debug($"[Gallery] NSFW enabled: {plugin.Configuration.ShowNSFWProfiles}");
                     Plugin.Log.Debug($"[Gallery] Loaded {rawProfiles.Count} profiles from server");
 
@@ -4500,7 +4500,7 @@ namespace CharacterReSelectPlugin.Windows
                 plugin.Configuration.BlockedGalleryProfiles.Add(physicalName);
                 plugin.Configuration.Save();
 
-                Plugin.Log.Info($"[Gallery] Blocked user: {physicalName} (CS+ name: {profile.CharacterName})");
+                Plugin.Log.Info($"[Gallery] Blocked user: {physicalName} (CRS+ name: {profile.CharacterName})");
                 FilterProfiles();
             }
         }

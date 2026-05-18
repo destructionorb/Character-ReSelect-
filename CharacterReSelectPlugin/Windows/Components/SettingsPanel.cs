@@ -174,7 +174,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             bool isSettingsOpen = plugin.IsSettingsOpen;
             var windowFlags = ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoScrollbar;
 
-            if (ImGui.Begin("Character Select+ Settings", ref isSettingsOpen, windowFlags))
+            if (ImGui.Begin("Character ReSelect+ Settings", ref isSettingsOpen, windowFlags))
             {
                 if (!isSettingsOpen)
                     plugin.IsSettingsOpen = false;
@@ -219,7 +219,7 @@ namespace CharacterReSelectPlugin.Windows.Components
 
             // Header
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.8f, 0.85f, 0.95f, 1.0f));
-            ImGui.Text("Customize your Character Select+ experience");
+            ImGui.Text("Customize your Character ReSelect+ experience");
             ImGui.PopStyleColor();
             ImGui.Separator();
             ImGui.Spacing();
@@ -755,7 +755,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                 plugin.Configuration.ReapplyDesignOnJobChange = reapplyDesign;
                 plugin.Configuration.Save();
             }
-            DrawTooltip("If checked, Character Select+ will reapply the last used design when you switch jobs.");
+            DrawTooltip("If checked, Character ReSelect+ will reapply the last used design when you switch jobs.");
 
             bool randomFavoritesOnly = plugin.Configuration.RandomSelectionFavoritesOnly;
             if (ImGui.Checkbox("Random Selection: Favourites Only", ref randomFavoritesOnly))
@@ -802,25 +802,25 @@ namespace CharacterReSelectPlugin.Windows.Components
                 plugin.Configuration.ShowViewRPContextMenu = showViewRP;
                 plugin.Configuration.Save();
             }
-            DrawTooltip("When enabled, right-clicking players shows a 'View RP Profile' option.\nThis allows you to view other CS+ users' RP profiles.");
+            DrawTooltip("When enabled, right-clicking players shows a 'View RP Profile' option.\nThis allows you to view other CRS+ users' RP profiles.");
 
             // Block User toggle
             bool showBlock = plugin.Configuration.ShowBlockUserContextMenu;
-            if (ImGui.Checkbox("Show 'Block CS+ User' in context menu", ref showBlock))
+            if (ImGui.Checkbox("Show 'Block CRS+ User' in context menu", ref showBlock))
             {
                 plugin.Configuration.ShowBlockUserContextMenu = showBlock;
                 plugin.Configuration.Save();
             }
-            DrawTooltip("When enabled, right-clicking CS+ users shows a 'Block CS+ User' option.\nBlocked users' CS+ names won't be displayed to you.");
+            DrawTooltip("When enabled, right-clicking CRS+ users shows a 'Block CSR+ User' option.\nBlocked users' CRS+ names won't be displayed to you.");
 
             // Report User toggle
             bool showReport = plugin.Configuration.ShowReportUserContextMenu;
-            if (ImGui.Checkbox("Show 'Report CS+ Name' in context menu", ref showReport))
+            if (ImGui.Checkbox("Show 'Report CRS+ Name' in context menu", ref showReport))
             {
                 plugin.Configuration.ShowReportUserContextMenu = showReport;
                 plugin.Configuration.Save();
             }
-            DrawTooltip("When enabled, right-clicking CS+ users shows a 'Report CS+ Name' option.\nUse this to report offensive CS+ names to moderators.");
+            DrawTooltip("When enabled, right-clicking CRS+ users shows a 'Report CRS+ Name' option.\nUse this to report offensive CRS+ names to moderators.");
 
             ImGui.Spacing();
             ImGui.Separator();
@@ -1130,7 +1130,7 @@ namespace CharacterReSelectPlugin.Windows.Components
         {
             // Warning
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.9f, 0.8f, 0.4f, 1f));
-            ImGui.TextWrapped("Uses your CS+ Character's name and pronouns in NPC dialogue");
+            ImGui.TextWrapped("Uses your CRS+ Character's name and pronouns in NPC dialogue");
             ImGui.PopStyleColor();
 
             // Requirements
@@ -1180,7 +1180,7 @@ namespace CharacterReSelectPlugin.Windows.Components
 
                 plugin.Configuration.Save();
             }
-            DrawTooltip("Replaces NPC dialogue text to use your CS+ Character's name and pronouns instead of your game character.\nRequires an active CS+ character with RP Profile data.");
+            DrawTooltip("Replaces NPC dialogue text to use your CRS+ Character's name and pronouns instead of your game character.\nRequires an active CRS+ character with RP Profile data.");
 
             if (plugin.Configuration.EnableDialogueIntegration)
             {
@@ -1188,15 +1188,15 @@ namespace CharacterReSelectPlugin.Windows.Components
 
                 // Simplified user-facing options
                 bool replaceName = plugin.Configuration.ReplaceNameInDialogue;
-                if (ImGui.Checkbox("Use CS+ Character Name", ref replaceName))
+                if (ImGui.Checkbox("Use CRS+ Character Name", ref replaceName))
                 {
                     plugin.Configuration.ReplaceNameInDialogue = replaceName;
                     plugin.Configuration.Save();
                 }
-                DrawTooltip("Replace your real character name with your CS+ character name in dialogue.");
+                DrawTooltip("Replace your real character name with your CRS+ character name in dialogue.");
 
                 bool replacePronouns = plugin.Configuration.ReplacePronounsInDialogue;
-                if (ImGui.Checkbox("Use CS+ Character Pronouns", ref replacePronouns))
+                if (ImGui.Checkbox("Use CRS+ Character Pronouns", ref replacePronouns))
                 {
                     plugin.Configuration.ReplacePronounsInDialogue = replacePronouns;
                     plugin.Configuration.Save();
@@ -1302,7 +1302,7 @@ namespace CharacterReSelectPlugin.Windows.Components
 
             // Main toggle
             bool enableNameReplacement = plugin.Configuration.EnableNameReplacement;
-            if (ImGui.Checkbox("Show my CS+ name to myself", ref enableNameReplacement))
+            if (ImGui.Checkbox("Show my CRS+ name to myself", ref enableNameReplacement))
             {
                 plugin.Configuration.EnableNameReplacement = enableNameReplacement;
 
@@ -1320,7 +1320,7 @@ namespace CharacterReSelectPlugin.Windows.Components
 
                 plugin.Configuration.Save();
             }
-            DrawTooltip("Replace your in-game name with your CS+ character name in various UI elements.\nThis is client-side only - other players will not see this unless they also have CS+ and you've opted in.");
+            DrawTooltip("Replace your in-game name with your CRS+ character name in various UI elements.\nThis is client-side only - other players will not see this unless they also have CRS+ and you've opted in.");
 
             // Sub-options (only show when main toggle enabled)
             if (plugin.Configuration.EnableNameReplacement)
@@ -1334,7 +1334,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                     plugin.Configuration.NameReplacementNameplate = nameplateEnabled;
                     plugin.Configuration.Save();
                 }
-                DrawTooltip("Replace your nameplate above your character with your CS+ name.");
+                DrawTooltip("Replace your nameplate above your character with your CRS+ name.");
 
                 // Chat sub-option
                 bool chatEnabled = plugin.Configuration.NameReplacementChat;
@@ -1379,12 +1379,12 @@ namespace CharacterReSelectPlugin.Windows.Components
 
             // Opt-in for others seeing your name
             bool allowOthers = plugin.Configuration.AllowOthersToSeeMyCSName;
-            if (ImGui.Checkbox("Allow others to see my CS+ name", ref allowOthers))
+            if (ImGui.Checkbox("Allow others to see my CRS+ name", ref allowOthers))
             {
                 plugin.Configuration.AllowOthersToSeeMyCSName = allowOthers;
                 plugin.Configuration.Save();
             }
-            DrawTooltip("When enabled, other CS+ users who have 'Show other CS+ users' names' turned on\nwill see your CS+ character name instead of your in-game name.\nRequires your profile to be set to 'Direct Sharing' or 'Public'.");
+            DrawTooltip("When enabled, other CRS+ users who have 'Show other CRS+ users' names' turned on\nwill see your CRS+ character name instead of your in-game name.\nRequires your profile to be set to 'Direct Sharing' or 'Public'.");
 
             // Show requirement note
             ImGui.Indent(24);
@@ -1399,12 +1399,12 @@ namespace CharacterReSelectPlugin.Windows.Components
             ImGui.Spacing();
 
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.8f, 0.8f, 0.9f, 1.0f));
-            ImGui.Text("Other CS+ Users");
+            ImGui.Text("Other CRS+ Users");
             ImGui.PopStyleColor();
             ImGui.Spacing();
 
             bool enableShared = plugin.Configuration.EnableSharedNameReplacement;
-            if (ImGui.Checkbox("Show other CS+ users' names", ref enableShared))
+            if (ImGui.Checkbox("Show other CRS+ users' names", ref enableShared))
             {
                 plugin.Configuration.EnableSharedNameReplacement = enableShared;
 
@@ -1416,7 +1416,7 @@ namespace CharacterReSelectPlugin.Windows.Components
 
                 plugin.Configuration.Save();
             }
-            DrawTooltip("See other CS+ users' character names instead of their in-game names.\nOnly shows for users who have opted in to share their name.\nThis is independent of self name replacement - you can use one without the other.");
+            DrawTooltip("See other CRS+ users' character names instead of their in-game names.\nOnly shows for users who have opted in to share their name.\nThis is independent of self name replacement - you can use one without the other.");
 
             // Simple glow for others option (only show when shared name replacement is enabled)
             if (plugin.Configuration.EnableSharedNameReplacement)
@@ -1428,7 +1428,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                     plugin.Configuration.UseSimpleGlowForOthers = simpleGlowOthers;
                     plugin.Configuration.Save();
                 }
-                DrawTooltip("Use a simple solid glow instead of animated wave effect for other players' nameplates.\n\nThis disables the periodic nameplate refresh that enables smooth animation.\nEnable this if you notice performance issues or crashes with many CS+ users nearby.");
+                DrawTooltip("Use a simple solid glow instead of animated wave effect for other players' nameplates.\n\nThis disables the periodic nameplate refresh that enables smooth animation.\nEnable this if you notice performance issues or crashes with many CRS+ users nearby.");
                 ImGui.Unindent(20f);
             }
 
@@ -1448,7 +1448,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                 plugin.Configuration.EnableRevealActualNamesKeybind = enableRevealKeybind;
                 plugin.Configuration.Save();
             }
-            DrawTooltip("When enabled, hold the selected key to temporarily see actual in-game names\ninstead of CS+ names. Useful for checking who someone really is.");
+            DrawTooltip("When enabled, hold the selected key to temporarily see actual in-game names\ninstead of CRS+ names. Useful for checking who someone really is.");
 
             if (plugin.Configuration.EnableRevealActualNamesKeybind)
             {
@@ -1630,7 +1630,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             }
 
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.8f, 0.9f, 1.0f, 1f));
-            ImGui.TextWrapped("Assign specific CS+ Characters to auto-apply when logging into specific in-game characters.");
+            ImGui.TextWrapped("Assign specific CRS+ Characters to auto-apply when logging into specific in-game characters.");
             ImGui.PopStyleColor();
 
             ImGui.Spacing();
@@ -1777,9 +1777,9 @@ namespace CharacterReSelectPlugin.Windows.Components
                 ImGui.PopStyleColor();
                 ImGui.Spacing();
 
-                ImGui.Text("New CS+ Character:");
+                ImGui.Text("New CRS+ Character:");
                 ImGui.SetNextItemWidth(300f);
-                if (ImGui.BeginCombo("##EditCSChar", string.IsNullOrEmpty(editingAssignmentValue) ? "Select CS+ Character" : editingAssignmentValue))
+                if (ImGui.BeginCombo("##EditCSChar", string.IsNullOrEmpty(editingAssignmentValue) ? "Select CRS+ Character" : editingAssignmentValue))
                 {
                     // Add "None" option first
                     if (ImGui.Selectable("None", editingAssignmentValue == "None"))
@@ -1947,9 +1947,9 @@ namespace CharacterReSelectPlugin.Windows.Components
 
             ImGui.Spacing();
 
-            ImGui.Text("CS+ Character:");
+            ImGui.Text("CRS+ Character:");
             ImGui.SetNextItemWidth(300f);
-            if (ImGui.BeginCombo("##CSChar", string.IsNullOrEmpty(newCSCharacter) ? "Select CS+ Character" : newCSCharacter))
+            if (ImGui.BeginCombo("##CSChar", string.IsNullOrEmpty(newCSCharacter) ? "Select CRS+ Character" : newCSCharacter))
             {
                 // Add "None" option first
                 if (ImGui.Selectable("None", newCSCharacter == "None"))
@@ -1977,7 +1977,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                 }
                 ImGui.EndCombo();
             }
-            DrawTooltip("Choose which CS+ character should auto-apply for this in-game character.\nSelect 'None' to prevent any auto-application for this character.");
+            DrawTooltip("Choose which CRS+ character should auto-apply for this in-game character.\nSelect 'None' to prevent any auto-application for this character.");
 
             // Design selection (only show if a valid character is selected)
             var newSelectedChar = plugin.Characters.FirstOrDefault(c => c.Name == newCSCharacterBuffer);
@@ -2047,7 +2047,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             {
                 ImGui.Spacing();
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.8f, 0.8f, 0.6f, 1f));
-                ImGui.TextWrapped("Tip: The plugin will remember character names after you log into them and use a CS+ character at least once.");
+                ImGui.TextWrapped("Tip: The plugin will remember character names after you log into them and use a CRS+ character at least once.");
                 ImGui.PopStyleColor();
             }
 
@@ -2093,7 +2093,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                 plugin.Configuration.EnableJobAssignments = enableJobAssignments;
                 plugin.Configuration.Save();
             }
-            DrawTooltip("Automatically switch CS+ character/design when you change jobs in-game.\nJob-specific assignments take priority over role assignments.");
+            DrawTooltip("Automatically switch CRS+ character/design when you change jobs in-game.\nJob-specific assignments take priority over role assignments.");
 
             // Warning about Glamourer Automations conflict
             if (enableJobAssignments)
@@ -2136,7 +2136,7 @@ namespace CharacterReSelectPlugin.Windows.Components
 
             // Info text
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.7f, 0.8f, 0.9f, 1.0f));
-            ImGui.TextWrapped("Assign CS+ characters or designs to specific jobs or roles. When you switch to that job, CS+ will automatically apply the assigned character/design.");
+            ImGui.TextWrapped("Assign CRS+ characters or designs to specific jobs or roles. When you switch to that job, CRS+ will automatically apply the assigned character/design.");
             ImGui.PopStyleColor();
 
             ImGui.Spacing();
@@ -2299,7 +2299,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             if (characterNames.Length == 0)
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1.0f, 0.7f, 0.4f, 1.0f));
-                ImGui.TextWrapped("No CS+ characters found. Create a character first.");
+                ImGui.TextWrapped("No CRS+ characters found. Create a character first.");
                 ImGui.PopStyleColor();
                 ImGui.Spacing();
                 return;
@@ -2569,7 +2569,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             {
                 ImGui.Spacing();
                 ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1.0f), "• Hold Ctrl+Shift while clicking Add Character/Design");
-                ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1.0f), "• Auto-categorizes mods in CS+ only (no Penumbra changes)");
+                ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1.0f), "• Auto-categorizes mods in CRS+ only (no Penumbra changes)");
                 ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1.0f), "• Right-click to move mods if categorization is wrong");
                 ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1.0f), "• Auto-manages Gear/Hair mods per character");
                 ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1.0f), "• Other categories managed manually");

@@ -352,11 +352,11 @@ namespace CharacterReSelectPlugin
                         
                         if (affectedItems.Count == 1)
                         {
-                            messageBuilder.AppendLine($"[CS+] WARNING: Deleted mod '{modName}' was used in the following Design:");
+                            messageBuilder.AppendLine($"[CRS+] WARNING: Deleted mod '{modName}' was used in the following Design:");
                         }
                         else
                         {
-                            messageBuilder.AppendLine($"[CS+] WARNING: Deleted mod '{modName}' was used in the following Designs:");
+                            messageBuilder.AppendLine($"[CRS+] WARNING: Deleted mod '{modName}' was used in the following Designs:");
                         }
                         
                         foreach (var (character, design) in affectedItems)

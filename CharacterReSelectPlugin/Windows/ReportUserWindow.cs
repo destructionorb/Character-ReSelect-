@@ -25,7 +25,7 @@ public class ReportUserWindow : Window, IDisposable
 
     private const string ApiBaseUrl = "https://character-select-profile-server-production.up.railway.app";
 
-    public ReportUserWindow(Plugin plugin) : base("Report CS+ User###CSPlusReportWindow",
+    public ReportUserWindow(Plugin plugin) : base("Report CRS+ User###CSPlusReportWindow",
         ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar)
     {
         this.plugin = plugin;
@@ -68,13 +68,13 @@ public class ReportUserWindow : Window, IDisposable
         try
         {
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1.0f, 0.6f, 0.6f, 1.0f));
-            ImGui.Text("Report Offensive CS+ Name");
+            ImGui.Text("Report Offensive CRS+ Name");
             ImGui.PopStyleColor();
             ImGui.Separator();
             ImGui.Spacing();
 
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.7f, 0.7f, 0.7f, 1.0f));
-            ImGui.Text("CS+ Name:");
+            ImGui.Text("CRS+ Name:");
             ImGui.PopStyleColor();
             ImGui.SameLine();
             ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1.0f, 0.5f, 0.5f, 1.0f));
@@ -178,7 +178,7 @@ public class ReportUserWindow : Window, IDisposable
                 reportedCharacterName = physicalName,
                 offensiveCSName = csName,
                 reporterCharacter = reporterName,
-                reason = "Offensive CS+ Name",
+                reason = "Offensive RS+ Name",
                 details = reportMessage
             };
 

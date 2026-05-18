@@ -120,7 +120,7 @@ namespace CharacterReSelectPlugin.Managers
                     {
                         args.AddMenuItem(new MenuItem
                         {
-                            Name = "Block CS+ User",
+                            Name = "Block CRS+ User",
                             Priority = 0,
                             PrefixChar = 'C',
                             PrefixColor = 37,
@@ -134,7 +134,7 @@ namespace CharacterReSelectPlugin.Managers
                     {
                         args.AddMenuItem(new MenuItem
                         {
-                            Name = "Report CS+ Name",
+                            Name = "Report CRS+ Name",
                             Priority = 0,
                             PrefixChar = 'C',
                             PrefixColor = 37,
@@ -195,7 +195,7 @@ namespace CharacterReSelectPlugin.Managers
                             {
                                 args.AddMenuItem(new MenuItem
                                 {
-                                    Name = "Block CS+ User",
+                                    Name = "Block CRS+ User",
                                     Priority = 0,
                                     PrefixChar = 'C',
                                     PrefixColor = 37,
@@ -209,7 +209,7 @@ namespace CharacterReSelectPlugin.Managers
                             {
                                 args.AddMenuItem(new MenuItem
                                 {
-                                    Name = "Report CS+ Name",
+                                    Name = "Report CRS+ Name",
                                     Priority = 0,
                                     PrefixChar = 'C',
                                     PrefixColor = 37,
@@ -231,7 +231,7 @@ namespace CharacterReSelectPlugin.Managers
         {
             plugin.Configuration.BlockedCSUsers.Add(physicalName);
             plugin.Configuration.Save();
-            Plugin.Log.Info($"Blocked CS+ user: {physicalName} (CS+ name: {csName})");
+            Plugin.Log.Info($"Blocked CRS+ user: {physicalName} (CRS+ name: {csName})");
         }
     }
 }

@@ -3633,7 +3633,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                 catch (Exception ex)
                 {
                     Plugin.Log.Error($"Error in snapshot creation from command: {ex}");
-                    Plugin.ChatGui.PrintError($"[Character Select+] Failed to create snapshot design: {ex.Message}");
+                    Plugin.ChatGui.PrintError($"[Character ReSelect+] Failed to create snapshot design: {ex.Message}");
                 }
             });
         }
@@ -3655,7 +3655,7 @@ namespace CharacterReSelectPlugin.Windows.Components
                     var recentDesign = await GetMostRecentGlamourerDesign();
                     if (recentDesign == null)
                     {
-                        Plugin.ChatGui.PrintError("[Character Select+] No recent Glamourer design found. Please create a design in Glamourer first or use the regular snapshot dialog.");
+                        Plugin.ChatGui.PrintError("[Character ReSelect+] No recent Glamourer design found. Please create a design in Glamourer first or use the regular snapshot dialog.");
                         return;
                     }
 
@@ -3680,12 +3680,12 @@ namespace CharacterReSelectPlugin.Windows.Components
                     // Create the CS+ design with the Glamourer design field populated
                     CreateSmartSnapshotDesign(recentDesign.Value);
 
-                    Plugin.ChatGui.Print($"[Character Select+] Smart snapshot created: '{recentDesign.Value.Name}' {(useConflictResolution ? "with" : "without")} CR");
+                    Plugin.ChatGui.Print($"[Character ReSelect+] Smart snapshot created: '{recentDesign.Value.Name}' {(useConflictResolution ? "with" : "without")} CR");
                 }
                 catch (Exception ex)
                 {
                     Plugin.Log.Error($"Error in smart snapshot creation: {ex}");
-                    Plugin.ChatGui.PrintError($"[Character Select+] Failed to create smart snapshot: {ex.Message}");
+                    Plugin.ChatGui.PrintError($"[Character ReSelect+] Failed to create smart snapshot: {ex.Message}");
                 }
             });
         }
@@ -3892,7 +3892,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             catch (Exception ex)
             {
                 Plugin.Log.Error($"Error creating smart snapshot design: {ex}");
-                Plugin.ChatGui.PrintError($"[Character Select+] Failed to create smart snapshot design: {ex.Message}");
+                Plugin.ChatGui.PrintError($"[Character ReSelect+] Failed to create smart snapshot design: {ex.Message}");
             }
             finally
             {
