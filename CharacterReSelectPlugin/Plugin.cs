@@ -190,7 +190,6 @@ namespace CharacterReSelectPlugin
 
         private ICallGateSubscriber<string, RPProfile>? requestProfile;
         private ICallGateProvider<string, RPProfile>? provideProfile;
-        private ContextMenuManager? contextMenuManager;
         private static readonly Dictionary<string, string> ActiveProfilesByPlayerName = new();
         public string NewCharacterTag { get; set; } = "";
         public List<string> KnownTags => Configuration.KnownTags;
@@ -681,7 +680,6 @@ namespace CharacterReSelectPlugin
                 Plugin.Log.Debug($"[Character ReSelect+] Local character name: {RePlayerState.CharacterName}");
             };
 
-            contextMenuManager = new ContextMenuManager(this, Plugin.ContextMenu);
 
             // Cleanup orphaned images on background thread to prevent UI freeze (especially for network paths)
             Task.Run(() =>
@@ -1481,7 +1479,6 @@ namespace CharacterReSelectPlugin
             CommandManager.RemoveHandler("/spose");
             CommandManager.RemoveHandler("/gallery");
             CommandManager.RemoveHandler("/selectrevert");
-            contextMenuManager?.Dispose();
             Framework.Update -= FrameworkUpdate; // Fixed: should be -= not +=
             PoseManager?.Dispose();
             dialogueProcessor?.Dispose();

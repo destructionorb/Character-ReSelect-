@@ -220,7 +220,6 @@ namespace CharacterReSelectPlugin.Windows
                 currentPlayerName = currentPlayer.CharacterName;
                 currentWorldName = currentPlayer.HomeWorld.Value.Name.ToString();
             }
-            _ = SyncNSFWFromServerAsync(character, currentPlayerName, currentWorldName);
 
             pronouns = rp.Pronouns ?? "";
             race = rp.Race ?? "";
@@ -894,26 +893,6 @@ namespace CharacterReSelectPlugin.Windows
                             string localName = player.CharacterName;
                             string worldName = player.HomeWorld.Value.Name.ToString();
                             string fullKey = $"{localName}@{worldName}";
-
-                            if (profile.Sharing != ProfileSharing.NeverShare)
-                            {
-                                ProfileSharing effectiveSharing = profile.Sharing;
-                                if (profile.Sharing == ProfileSharing.ShowcasePublic)
-                                {
-                                    var userMain = plugin.Configuration.GalleryMainCharacter;
-                                    bool onMainCharacter = !string.IsNullOrEmpty(userMain) && fullKey == userMain;
-                                    effectiveSharing = onMainCharacter ? ProfileSharing.ShowcasePublic : ProfileSharing.AlwaysShare;
-                                }
-
-                                _ = Plugin.UploadProfileAsync(profile, character.LastInGameName, isCharacterApplication: false,
-                                    sharingOverride: effectiveSharing, excludeFromNameSync: character.ExcludeFromNameSync);
-                                plugin.GalleryWindow.RefreshLikeStatesAfterProfileUpdate(character.Name);
-                                Plugin.Log.Info($"[RPProfile] ✅ Uploaded profile for {character.Name} from RP editor (effective sharing: {effectiveSharing}, excluded: {character.ExcludeFromNameSync})");
-                            }
-                            else
-                            {
-                                Plugin.Log.Debug($"[RPProfile] ⚠ Skipped upload from RP editor (NeverShare)");
-                            }
                         }
                     }
 
@@ -1020,44 +999,6 @@ namespace CharacterReSelectPlugin.Windows
         private float GetSafeScale(float baseScale)
         {
             return Math.Clamp(baseScale, 0.3f, 5.0f); // Prevent extreme scaling
-        }
-
-        private async System.Threading.Tasks.Task SyncNSFWFromServerAsync(Character character, string? playerName, string? worldName)
-        {
-            try
-            {
-                // Check gallery for current NSFW status
-                using var http = Plugin.CreateAuthenticatedHttpClient();
-                var response = await http.GetAsync("https://character-select-profile-server-production.up.railway.app/gallery?nsfw=true");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var profiles = JsonConvert.DeserializeObject<List<GalleryProfile>>(json);
-
-                    GalleryProfile? galleryProfile = null;
-
-                    // Always construct the exact gallery ID using passed-in player info
-                    if (!string.IsNullOrEmpty(playerName) && !string.IsNullOrEmpty(worldName))
-                    {
-                        var exactGalleryId = $"{character.Name}_{playerName}@{worldName}";
-                        galleryProfile = profiles?.FirstOrDefault(p => p.CharacterId == exactGalleryId);
-                    }
-
-                    if (galleryProfile != null && character.RPProfile != null &&
-                        galleryProfile.IsNSFW != character.RPProfile.IsNSFW)
-                    {
-                        // Update local profile to match server
-                        character.RPProfile.IsNSFW = galleryProfile.IsNSFW;
-                        isNSFW = galleryProfile.IsNSFW; // Update editor state
-                        originalIsNSFW = galleryProfile.IsNSFW; // Update original value
-                        plugin.Configuration.Save();
-                    }
-                }
-            }
-            catch
-            {
-            }
         }
 
         private string GetRPBackgroundImageCachePath(string imageUrl)

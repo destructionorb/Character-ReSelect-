@@ -36,6 +36,7 @@ namespace CharacterReSelectPlugin
         public int? HonorificGradientSet { get; set; } = null;  // -1 = Two Colour Gradient
         public string? HonorificAnimationStyle { get; set; } = null;
         public string MoodlePreset { get; set; } = "";
+        public string PronounSet { get; set; } = "";
         public byte IdlePoseIndex { get; set; } = 7;
         public byte SitPoseIndex { get; set; } = 255;
         public byte GroundSitPoseIndex { get; set; } = 255;
@@ -120,6 +121,7 @@ namespace CharacterReSelectPlugin
             Vector3 honorificGlow,
             string moodlePreset,
             string characterautomation,
+            string pronounSet,
             string galleryStatus = "")
         {
             Name = name;
@@ -137,6 +139,7 @@ namespace CharacterReSelectPlugin
             HonorificGlow = honorificGlow;
             MoodlePreset = moodlePreset;
             CharacterAutomation = characterautomation;
+            PronounSet = pronounSet;
             BackgroundImage = null;
             Effects = new ProfileEffects();
             GalleryStatus = galleryStatus;

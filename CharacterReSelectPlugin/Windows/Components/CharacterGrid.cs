@@ -2231,79 +2231,9 @@ namespace CharacterReSelectPlugin.Windows.Components
 
             plugin.SetActiveCharacter(character);
 
-            // Check if we should upload to server
-            if (Plugin.RePlayerState is { } player && player.HomeWorld.IsValid)
-            {
-                string localName = player.CharacterName;
-                string worldName = player.HomeWorld.Value.Name.ToString();
-                string fullKey = $"{localName}@{worldName}";
-
-                if (ShouldUploadToServer(character))
-                {
-                    var effectiveSharing = GetEffectiveSharingForUpload(character, fullKey);
-                    var excludeFromSync = character.ExcludeFromNameSync; // Capture for closure
-                    System.Threading.Tasks.Task.Run(() =>
-                    {
-                        var profileToSend = plugin.BuildProfileForUpload(character);
-                        _ = Plugin.UploadProfileAsync(profileToSend, character.LastInGameName ?? character.Name,
-                            sharingOverride: effectiveSharing, excludeFromNameSync: excludeFromSync);
-                    });
-                    Plugin.Log.Info($"[CharacterGrid] ✓ Uploading profile for {character.Name} (effective sharing: {effectiveSharing}, excluded: {excludeFromSync})");
-                }
-                else
-                {
-                    Plugin.Log.Info($"[CharacterGrid] ⚠ Skipped upload for {character.Name} (NeverShare)");
-                }
-            }
             plugin.QuickSwitchWindow.UpdateSelectionFromCharacter(character);
         }
-        private bool ShouldUploadToServer(Character character)
-        {
-            var sharing = character.RPProfile?.Sharing ?? ProfileSharing.AlwaysShare;
-
-            // NeverShare = never upload to server
-            if (sharing == ProfileSharing.NeverShare)
-            {
-                Plugin.Log.Debug($"[CharacterGrid-ShouldUpload] NeverShare - not uploading {character.Name}");
-                return false;
-            }
-
-            // AlwaysShare and ShowcasePublic both upload to server
-            Plugin.Log.Debug($"[CharacterGrid-ShouldUpload] ✓ {sharing} - uploading {character.Name}");
-            return true;
-        }
-
-        private ProfileSharing GetEffectiveSharingForUpload(Character character, string currentPhysicalCharacter)
-        {
-            // ExcludeFromNameSync = upload as NeverShare so server cache excludes this character
-            if (character.ExcludeFromNameSync)
-            {
-                Plugin.Log.Debug($"[CharacterGrid-Sharing] ExcludeFromNameSync - sending as NeverShare");
-                return ProfileSharing.NeverShare;
-            }
-
-            var sharing = character.RPProfile?.Sharing ?? ProfileSharing.AlwaysShare;
-
-            // NeverShare and AlwaysShare are sent as-is
-            if (sharing != ProfileSharing.ShowcasePublic)
-                return sharing;
-
-            // ShowcasePublic: Only send as ShowcasePublic (gallery listing) if on Main Character
-            var userMain = plugin.Configuration.GalleryMainCharacter;
-            bool onMainCharacter = !string.IsNullOrEmpty(userMain) && currentPhysicalCharacter == userMain;
-
-            if (onMainCharacter)
-            {
-                Plugin.Log.Debug($"[CharacterGrid-Sharing] ShowcasePublic on Main Character - will appear in Gallery");
-                return ProfileSharing.ShowcasePublic;
-            }
-            else
-            {
-                Plugin.Log.Debug($"[CharacterGrid-Sharing] ShowcasePublic but not on Main Character - sending as AlwaysShare");
-                return ProfileSharing.AlwaysShare;
-            }
-        }
-
+        
         private List<Character> GetFilteredCharacters()
         {
             if (filterCacheDirty ||

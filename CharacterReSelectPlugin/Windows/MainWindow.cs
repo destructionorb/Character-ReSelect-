@@ -501,19 +501,6 @@ namespace CharacterReSelectPlugin.Windows
 
             ImGui.SameLine();
 
-            if (ImGui.Button("Gallery"))
-                plugin.GalleryWindow.IsOpen = !plugin.GalleryWindow.IsOpen;
-            plugin.GalleryButtonPos = ImGui.GetItemRectMin();
-            plugin.GalleryButtonSize = ImGui.GetItemRectSize();
-
-            if (ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenBlockedByPopup))
-            {
-                ImGui.BeginTooltip();
-                ImGui.Text("Browse the Character Showcase Gallery");
-                ImGui.Text("See other players' characters and share your own!");
-                ImGui.EndTooltip();
-            }
-
             ImGui.SameLine();
 
             if (ImGui.Button("Tutorial"))

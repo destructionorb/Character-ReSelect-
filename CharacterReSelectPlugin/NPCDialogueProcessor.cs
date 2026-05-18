@@ -58,10 +58,10 @@ namespace CharacterReSelectPlugin
 
         private byte[] ProcessGenderFlags(byte[] data, Character character)
         {
-            var pronounSet = PronounParser.Parse(character.RPProfile?.Pronouns ?? "");
+            var pronounSet = PronounParser.Parse(character?.PronounSet ?? "");
             bool isTheyThem = pronounSet.Subject.Equals("they", StringComparison.OrdinalIgnoreCase);
             
-            // log.Info($"[ProcessGenderFlags] Called for pronouns: {character.RPProfile?.Pronouns} | ReplacePronounsInDialogue: {plugin.Configuration.ReplacePronounsInDialogue}");
+             log.Info($"[ProcessGenderFlags] Called for pronouns: {character?.PronounSet} | ReplacePronounsInDialogue: {plugin.Configuration.ReplacePronounsInDialogue}");
             
             if (!plugin.Configuration.ReplacePronounsInDialogue)
                 return data;

@@ -67,6 +67,7 @@ namespace CharacterReSelectPlugin.Windows.Components
         private int? tempHonorificGradientSet = null;
         private string? tempHonorificAnimationStyle = null;
         private string tempMoodlePreset = "";
+        private string tempCharacterPronouns = "";
 
         // Gradient preset names and data from Honorific (exact base64 encoded color arrays)
         private static readonly string[] GradientPresetNames = new[]
@@ -416,11 +417,12 @@ namespace CharacterReSelectPlugin.Windows.Components
             // Character Pronouns
             DrawFormField("Character Pronouns", labelWidth, inputWidth, inputOffset, () => //TODO: make Plugin.NewCharacterPronouns
             {
-                ImGui.InputText("##CharacterPronouns", ref tempName, 50);
+                ImGui.InputText("##CharacterPronouns", ref tempPronouns, 50);
                 plugin.CharacterPronounFieldPos = ImGui.GetItemRectMin();
                 plugin.CharacterPronounFieldSize = ImGui.GetItemRectSize();
 
                 if (IsEditWindowOpen) editedCharacterPronouns = tempPronouns;
+                else plugin.NewCharacterPronouns = tempPronouns;
 
             }, "Enter your OC's pronouns for immersive dialogue here.", scale);
             ImGui.Separator();
@@ -2204,6 +2206,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             character.HonorificGradientSet = editedCharacterHonorificGradientSet;
             character.HonorificAnimationStyle = editedCharacterHonorificAnimationStyle;
             character.MoodlePreset = editedCharacterMoodlePreset;
+            character.PronounSet = editedCharacterPronouns;
             character.AssignedGearset = editedCharacterGearset;
             character.ExcludeFromNameSync = editedCharacterExcludeFromNameSync;
             character.Alias = string.IsNullOrWhiteSpace(editedCharacterAlias) ? null : editedCharacterAlias;
@@ -2306,6 +2309,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             editedCharacterHonorificGradientSet = character.HonorificGradientSet;
             editedCharacterHonorificAnimationStyle = character.HonorificAnimationStyle;
             editedCharacterMoodlePreset = character.MoodlePreset ?? "";
+            editedCharacterPronouns = character.PronounSet ?? "";
             editedCharacterGearset = character.AssignedGearset;
             editedCharacterExcludeFromNameSync = character.ExcludeFromNameSync;
             editedCharacterAlias = character.Alias ?? "";
