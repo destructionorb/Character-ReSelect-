@@ -9,7 +9,7 @@ namespace CharacterReSelectPlugin.Managers
     public static class BackupManager
     {
         private static string BackupDirectory => Path.Combine(Plugin.PluginInterface.GetPluginConfigDirectory(), "Backups");
-        private static string ConfigBackupPath => Path.Combine(BackupDirectory, "characterselectplugin_backup.json");
+        private static string ConfigBackupPath => Path.Combine(BackupDirectory, "characterreselectplugin_backup.json");
         private static string VersionFilePath => Path.Combine(BackupDirectory, "last_backup_version.txt");
 
         // Create backup before updates if needed
@@ -300,9 +300,10 @@ namespace CharacterReSelectPlugin.Managers
                 }
 
                 string configJson = File.ReadAllText(filePath);
+                configJson = configJson.Replace("CharacterSelectPlugin", "CharacterReSelectPlugin");
                 var settings = new JsonSerializerSettings 
                 {
-                    TypeNameHandling = TypeNameHandling.Objects
+                    TypeNameHandling = TypeNameHandling.None 
                 };
                 var importedConfig = JsonConvert.DeserializeObject<Configuration>(configJson, settings);
 
