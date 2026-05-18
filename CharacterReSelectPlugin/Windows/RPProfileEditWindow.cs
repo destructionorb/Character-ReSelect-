@@ -1482,27 +1482,6 @@ namespace CharacterReSelectPlugin.Windows
                 string localName = player.CharacterName;
                 string worldName = player.HomeWorld.Value.Name.ToString();
                 string fullKey = $"{localName}@{worldName}";
-
-                var sharing = rp.Sharing;
-
-                if (sharing != ProfileSharing.NeverShare && !string.IsNullOrWhiteSpace(character.LastInGameName))
-                {
-                    ProfileSharing effectiveSharing = sharing;
-                    if (sharing == ProfileSharing.ShowcasePublic)
-                    {
-                        var userMain = plugin.Configuration.GalleryMainCharacter;
-                        bool onMainCharacter = !string.IsNullOrEmpty(userMain) && fullKey == userMain;
-                        effectiveSharing = onMainCharacter ? ProfileSharing.ShowcasePublic : ProfileSharing.AlwaysShare;
-                    }
-
-                    _ = Plugin.UploadProfileAsync(rp, character.LastInGameName, isCharacterApplication: false,
-                        sharingOverride: effectiveSharing, excludeFromNameSync: character.ExcludeFromNameSync);
-                    Plugin.Log.Info($"[ExpandedProfile] ✅ Uploaded expanded profile for {character.Name} (effective sharing: {effectiveSharing}, excluded: {character.ExcludeFromNameSync})");
-                }
-                else
-                {
-                    Plugin.Log.Debug($"[ExpandedProfile] ⚠ Skipped upload for {character.Name} (NeverShare)");
-                }
             }
 
             IsOpen = false;

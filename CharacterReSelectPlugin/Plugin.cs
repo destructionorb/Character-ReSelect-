@@ -99,14 +99,12 @@ namespace CharacterReSelectPlugin
         public RPProfileWindow RPProfileEditor { get; private set; }
         public RPProfileEditWindow RPProfileEditWindow { get; private set; }
         public RPProfileViewWindow RPProfileViewer { get; private set; }
-        public GalleryWindow GalleryWindow { get; private set; } = null!;
         public TutorialManager TutorialManager { get; private set; } = null!;
         public SecretModeModWindow? SecretModeModWindow { get; set; } = null;
         public ReportUserWindow? ReportUserWindow { get; private set; } = null;
         public WarningModalWindow? WarningModalWindow { get; private set; } = null;
         public ImGuiFileBrowserWindow? FileBrowserWindow { get; private set; } = null;
         public FeaturesWindow? FeaturesWindow { get; private set; } = null;
-        public AchievementPopupWindow? AchievementPopupWindow { get; private set; } = null;
 
         // Track active name warning for the current user (to detect when they change their name)
         public NameWarning? ActiveNameWarning { get; set; } = null;
@@ -141,6 +139,7 @@ namespace CharacterReSelectPlugin
         public int? NewCharacterHonorificGradientSet { get; set; } = null;  // -1 = Two Colour Gradient
         public string? NewCharacterHonorificAnimationStyle { get; set; } = null;
         public string NewCharacterMoodlePreset { get; set; } = "";
+        public string NewCharacterPronouns { get; set; } = "";
         public PoseManager PoseManager { get; private set; } = null!;
         public byte NewCharacterIdlePoseIndex { get; set; } = 0;
         public PoseRestorer PoseRestorer { get; private set; } = null!;
@@ -150,12 +149,6 @@ namespace CharacterReSelectPlugin
         // Penumbra Integration
         public PenumbraIntegration PenumbraIntegration { get; private set; } = null!;
         public UserOverrideManager UserOverrideManager { get; private set; } = null!;
-
-        // Shared Name Manager for other CS+ users' names
-        public SharedNameManager? SharedNameManager { get; private set; }
-
-        // RP Profile Lookup Manager for context menu
-        public RPProfileLookupManager? RPProfileLookupManager { get; private set; }
 
         // Integration List Provider for autocomplete dropdowns
         public Managers.IntegrationListProvider? IntegrationListProvider { get; private set; }
@@ -266,6 +259,8 @@ namespace CharacterReSelectPlugin
         public Vector2? AddCharacterButtonSize { get; set; }
         public Vector2? CharacterNameFieldPos { get; set; }
         public Vector2? CharacterNameFieldSize { get; set; }
+        public Vector2? CharacterPronounFieldPos { get; set; }
+        public Vector2? CharacterPronounFieldSize {get; set; }
         public Vector2? PenumbraFieldPos { get; set; }
         public Vector2? PenumbraFieldSize { get; set; }
         public Vector2? GlamourerFieldPos { get; set; }
@@ -315,7 +310,6 @@ namespace CharacterReSelectPlugin
         public Vector2? GalleryButtonPos { get; set; }
         public Vector2? GalleryButtonSize { get; set; }
         private NPCDialogueProcessor? dialogueProcessor;
-        private PlayerNameProcessor? playerNameProcessor;
         public bool NewCharacterIsAdvancedMode { get; set; } = false;
 
         public unsafe Plugin(IGameInteropProvider gameInteropProvider)
@@ -411,12 +405,6 @@ namespace CharacterReSelectPlugin
             PenumbraIntegration = new PenumbraIntegration(PluginInterface, Log, ObjectTable);
             UserOverrideManager = new UserOverrideManager(PluginInterface);
 
-            // Initialize shared name manager for other CS+ users' names
-            SharedNameManager = new SharedNameManager(this, Log);
-
-            // Initialize RP profile lookup manager for context menu
-            RPProfileLookupManager = new RPProfileLookupManager(this, Log);
-
             // Initialize integration list provider for autocomplete dropdowns
             IntegrationListProvider = new Managers.IntegrationListProvider(this);
 
@@ -445,8 +433,6 @@ namespace CharacterReSelectPlugin
             ContentBoxRenderer.OnOpenLinkedProfile = OpenLinkedProfile;
             ContentBoxRenderer.OnOpenLinkedProfileExternal = OpenLinkedProfileFromServer;
 
-            GalleryWindow = new GalleryWindow(this);
-            WindowSystem.AddWindow(GalleryWindow);
             TutorialManager = new TutorialManager(this);
             
             // Initialize SecretModeModWindow (Mod Manager)
@@ -469,10 +455,6 @@ namespace CharacterReSelectPlugin
             // Initialize Features Window
             FeaturesWindow = new FeaturesWindow(this);
             WindowSystem.AddWindow(FeaturesWindow);
-
-            // Initialize Achievement Popup
-            AchievementPopupWindow = new AchievementPopupWindow(this);
-            WindowSystem.AddWindow(AchievementPopupWindow);
 
             // Guard against retroactive page 2 surprise for existing users
             if (!Configuration.HasSeenPage2Surprise && Configuration.Characters.Count >= 41)
@@ -565,11 +547,6 @@ namespace CharacterReSelectPlugin
             CommandManager.AddHandler("/selectswitch", new CommandInfo(OnQuickSwitchCommand)
             {
                 HelpMessage = "Opens the Quick Character Switcher UI."
-            });
-
-            CommandManager.AddHandler("/gallery", new CommandInfo(OnGalleryCommand)
-            {
-                HelpMessage = "Opens the Character Showcase Gallery"
             });
 
 
@@ -747,29 +724,6 @@ namespace CharacterReSelectPlugin
                     Log.Error($"Failed to initialize dialogue processor: {ex.Message}");
                 }
             }
-
-            // Only initialize player name processor if name replacement is enabled
-            if (Configuration.EnableNameReplacement || Configuration.EnableSharedNameReplacement)
-            {
-                try
-                {
-                    playerNameProcessor = new PlayerNameProcessor(
-                        this,
-                        NamePlateGui,
-                        ChatGui,
-                        ObjectTable,
-                        AddonLifecycle,
-                        Log,
-                        PartyList,
-                        Condition
-                    );
-                }
-                catch (Exception ex)
-                {
-                    Log.Error($"Failed to initialize player name processor: {ex.Message}");
-                }
-            }
-
         }
 
         /// <summary>
@@ -796,34 +750,6 @@ namespace CharacterReSelectPlugin
             catch (Exception ex)
             {
                 Log.Error($"Failed to initialize dialogue processor: {ex.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Initializes the player name processor if not already initialized.
-        /// Called when user enables Name Sync in settings.
-        /// </summary>
-        public void EnsurePlayerNameProcessorInitialized()
-        {
-            if (playerNameProcessor != null) return;
-
-            try
-            {
-                playerNameProcessor = new PlayerNameProcessor(
-                    this,
-                    NamePlateGui,
-                    ChatGui,
-                    ObjectTable,
-                    AddonLifecycle,
-                    Log,
-                    PartyList,
-                    Condition
-                );
-                Log.Info("[NameSync] Player name processor initialized on-demand.");
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Failed to initialize player name processor: {ex.Message}");
             }
         }
 
@@ -1107,18 +1033,6 @@ namespace CharacterReSelectPlugin
         {
             QuickSwitchWindow.IsOpen = !QuickSwitchWindow.IsOpen; // Toggle Window On/Off
         }
-        private void OnGalleryCommand(string command, string args)
-        {
-            // Emergency stop if costs are too high, I am broke!
-            if (args.Equals("stop", StringComparison.OrdinalIgnoreCase))
-            {
-                GalleryWindow.EmergencyStop();
-                ChatGui.Print("[Character ReSelect+] Gallery emergency stop activated!");
-                return;
-            }
-
-            GalleryWindow.IsOpen = !GalleryWindow.IsOpen;
-        }
         public void ApplyProfile(Character character, int designIndex)
         {
             // Detect if this is a design switch on the SAME character (not a full character switch)
@@ -1171,20 +1085,6 @@ namespace CharacterReSelectPlugin
                 Plugin.Log.Debug($"[ApplyProfile] Saved: {fullKey} → {pluginCharacterKey}");
                 Plugin.Log.Debug($"[SetActiveCharacter] Updated LastUsedCharacterKey = {fullKey}");
                 Plugin.Log.Debug($"[ApplyProfile] Set LastInGameName = {character.LastInGameName} for profile {character.Name}");
-
-                // Always upload to keep server in sync - server uses sharing/exclusion flags to decide visibility
-                var profileToSend = BuildProfileForUpload(character);
-                var effectiveSharing = GetEffectiveSharingForUpload(character, fullKey);
-
-                // If profile is private/unmade or excluded, tell server not to show the name
-                bool shouldHideName = character.ExcludeFromNameSync ||
-                                      character.RPProfile == null ||
-                                      character.RPProfile.Sharing == ProfileSharing.NeverShare;
-
-                _ = Plugin.UploadProfileAsync(profileToSend, character.LastInGameName ?? character.Name,
-                    sharingOverride: shouldHideName ? ProfileSharing.NeverShare : effectiveSharing,
-                    excludeFromNameSync: character.ExcludeFromNameSync);
-                Plugin.Log.Info($"[ApplyProfile] ✓ Uploaded profile for {character.Name} (sharing: {(shouldHideName ? "NeverShare (hidden)" : effectiveSharing.ToString())}, excluded: {character.ExcludeFromNameSync})");
             }
             SaveConfiguration();
             if (character == null) return;
@@ -1405,9 +1305,6 @@ namespace CharacterReSelectPlugin
             }
             this.QuickSwitchWindow.UpdateSelectionFromCharacter(character);
 
-            // Refresh party list name replacement after character switch
-            playerNameProcessor?.RefreshPartyList();
-
             SaveConfiguration();
         }
 
@@ -1588,9 +1485,6 @@ namespace CharacterReSelectPlugin
             Framework.Update -= FrameworkUpdate; // Fixed: should be -= not +=
             PoseManager?.Dispose();
             dialogueProcessor?.Dispose();
-            playerNameProcessor?.Dispose();
-            SharedNameManager?.Dispose();
-            RPProfileLookupManager?.Dispose();
             IntegrationListProvider?.Dispose();
 
             // Dispose Penumbra integration services
@@ -2314,7 +2208,8 @@ namespace CharacterReSelectPlugin
                     NewCharacterHonorificColor,
                     NewCharacterHonorificGlow,
                     NewCharacterMoodlePreset, //MOODLES
-                    NewCharacterAutomation // Glamourer Automations
+                    NewCharacterAutomation, // Glamourer Automations
+                    NewCharacterPronouns //@destructionorb: PRONOUNS
                 )
                 {
                     IdlePoseIndex = NewCharacterIdlePoseIndex,
@@ -2373,7 +2268,6 @@ namespace CharacterReSelectPlugin
                 {
                     Configuration.HasSeenPage2Surprise = true;
                     SaveConfiguration();
-                    AchievementPopupWindow?.Show();
                 }
 
                 // Reset Fields after Saving
@@ -2397,6 +2291,7 @@ namespace CharacterReSelectPlugin
                 NewCharacterHonorificGradientSet = null;
                 NewCharacterHonorificAnimationStyle = null;
                 NewCharacterMoodlePreset = ""; //MOODLES
+                NewCharacterPronouns = ""; //@destructionorb: PRONOUNS
                 NewCharacterIdlePoseIndex = 8; // IDLES
                 NewCharacterAutomation = ""; //AUTOMATIONS
                 NewCharacterGearset = null;
@@ -3580,20 +3475,6 @@ namespace CharacterReSelectPlugin
 
                 Plugin.Log.Debug($"[SetActiveCharacter] Saved: {fullKey} → {pluginCharacterKey}");
                 Plugin.Log.Debug($"[SetActiveCharacter] Set LastInGameName = {fullKey} for profile {character.Name}");
-
-                // Always upload to keep server in sync - server uses sharing/exclusion flags to decide visibility
-                var profileToSend = BuildProfileForUpload(character);
-                var effectiveSharing = GetEffectiveSharingForUpload(character, fullKey);
-
-                // If profile is private/unmade or excluded, tell server not to show the name
-                bool shouldHideName = character.ExcludeFromNameSync ||
-                                      character.RPProfile == null ||
-                                      character.RPProfile.Sharing == ProfileSharing.NeverShare;
-
-                _ = Plugin.UploadProfileAsync(profileToSend, character.LastInGameName ?? character.Name,
-                    sharingOverride: shouldHideName ? ProfileSharing.NeverShare : effectiveSharing,
-                    excludeFromNameSync: character.ExcludeFromNameSync);
-                Plugin.Log.Info($"[SetActiveCharacter] ✓ Uploaded profile for {character.Name} (sharing: {(shouldHideName ? "NeverShare (hidden)" : effectiveSharing.ToString())}, excluded: {character.ExcludeFromNameSync})");
             }
         }
         public async Task TryRequestRPProfile(string targetName)
@@ -3706,195 +3587,6 @@ namespace CharacterReSelectPlugin
                 LastActiveTime = Configuration.ShowRecentlyActiveStatus ? DateTime.UtcNow : null,
             };
         }
-
-        public static async Task UploadProfileAsync(RPProfile profile, string characterName, bool isCharacterApplication = true, ProfileSharing? sharingOverride = null, bool? excludeFromNameSync = null)
-        {
-            Stream? imageStream = null;
-            StreamContent? imageContent = null;
-
-            // Apply sharing override for this upload (doesn't modify the original profile permanently)
-            var originalSharing = profile.Sharing;
-            if (sharingOverride.HasValue)
-            {
-                profile.Sharing = sharingOverride.Value;
-                Plugin.Log.Debug($"[UploadProfile] Using sharing override: {sharingOverride.Value} (original: {originalSharing})");
-            }
-
-            try
-            {
-                using var http = new HttpClient();
-                using var form = new MultipartFormDataContent();
-
-                // Get character match from config (for fallback data like nameplate colour)
-                var config = PluginInterface.GetPluginConfig() as Configuration;
-                Character? match = config?.Characters.FirstOrDefault(c => c.LastInGameName == characterName);
-
-                if (match != null)
-                {
-                    // Only set character name if it's not already set
-                    // Use Alias if set, otherwise fall back to Name
-                    profile.CharacterName ??= !string.IsNullOrWhiteSpace(match.Alias) ? match.Alias : match.Name;
-
-                    // Sync the shared name visibility setting - use passed value if available, otherwise fall back to match
-                    bool globalSetting = config?.AllowOthersToSeeMyCSName ?? true;
-                    bool isExcluded = excludeFromNameSync ?? match.ExcludeFromNameSync;
-                    profile.AllowOthersToSeeMyCSName = isExcluded ? false : globalSetting;
-
-                    // Only set nameplate colour if it's not set (all zeros)
-                    if (profile.NameplateColor.X <= 0f
-                     && profile.NameplateColor.Y <= 0f
-                     && profile.NameplateColor.Z <= 0f)
-                    {
-                        profile.NameplateColor = match.NameplateColor;
-                    }
-
-                    // Ensure background and effects are included in upload
-                    if (profile.Effects == null && match.Effects != null)
-                    {
-                        profile.Effects = new ProfileEffects
-                        {
-                            CircuitBoard = match.Effects.CircuitBoard,
-                            Fireflies = match.Effects.Fireflies,
-                            FallingLeaves = match.Effects.FallingLeaves,
-                            Butterflies = match.Effects.Butterflies,
-                            Bats = match.Effects.Bats,
-                            Fire = match.Effects.Fire,
-                            Smoke = match.Effects.Smoke,
-                            ColorScheme = match.Effects.ColorScheme,
-                            CustomParticleColor = match.Effects.CustomParticleColor
-                        };
-                    }
-                }
-
-                // Determine correct image to upload
-                string? imagePathToUpload = null;
-                if (!string.IsNullOrEmpty(profile.CustomImagePath) && File.Exists(profile.CustomImagePath))
-                {
-                    imagePathToUpload = profile.CustomImagePath;
-                }
-                else if (!string.IsNullOrEmpty(match?.ImagePath) && File.Exists(match.ImagePath))
-                {
-                    imagePathToUpload = match.ImagePath;
-                }
-
-                // Attach image if found
-                if (!string.IsNullOrEmpty(imagePathToUpload))
-                {
-                    imageStream = File.OpenRead(imagePathToUpload);
-                    imageContent = new StreamContent(imageStream);
-                    imageContent.Headers.ContentType =
-                        new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
-                    form.Add(imageContent, "image", $"{Guid.NewGuid()}.png");
-                }
-
-                // Only preserve server NSFW for character applications, not profile editor saves
-                if (isCharacterApplication)
-                {
-                    try 
-                    {
-                        using var checkHttp = CreateAuthenticatedHttpClient();
-                        var galleryResponse = await checkHttp.GetAsync("https://character-select-profile-server-production.up.railway.app/gallery?nsfw=true");
-                        
-                        if (galleryResponse.IsSuccessStatusCode)
-                        {
-                            var galleryJson = await galleryResponse.Content.ReadAsStringAsync();
-                            var galleryProfiles = JsonConvert.DeserializeObject<List<GalleryProfile>>(galleryJson);
-                            
-                            // Find this character's profile in gallery
-                            var existingGalleryProfile = galleryProfiles?.FirstOrDefault(p => 
-                                p.CharacterName == (profile.CharacterName ?? characterName) ||
-                                p.CharacterId.Contains(characterName));
-                            
-                            if (existingGalleryProfile != null && existingGalleryProfile.IsNSFW)
-                            {
-                                // Server has NSFW=true, preserve it for character applications
-                                profile.IsNSFW = true;
-                                Plugin.Log.Debug($"[UploadProfile] Preserving server NSFW=true for character application: {characterName}");
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Plugin.Log.Debug($"[UploadProfile] Could not check server NSFW status: {ex.Message}");
-                    }
-                }
-                else
-                {
-                    Plugin.Log.Debug($"[UploadProfile] Profile editor save - respecting user's NSFW choice: {profile.IsNSFW} for {characterName}");
-                }
-
-                // Upload JSON - The profile parameter already has the correct data!
-                string json = JsonConvert.SerializeObject(profile);
-                form.Add(new StringContent(json, Encoding.UTF8, "application/json"), "profile");
-
-                // Add a flag to indicate this is an update, not a new profile
-                form.Add(new StringContent("true", Encoding.UTF8, "text/plain"), "isUpdate");
-
-                // Send both CS+ character name and physical character name
-                form.Add(new StringContent(profile.CharacterName ?? "Unknown", Encoding.UTF8, "text/plain"), "csCharacterName");
-
-                string urlSafeName = Uri.EscapeDataString(characterName);
-
-                // Use PUT for updates instead of POST to preserve likes
-                var request = new HttpRequestMessage(HttpMethod.Put, $"https://character-select-profile-server-production.up.railway.app/upload/{urlSafeName}")
-                {
-                    Content = form
-                };
-
-                Plugin.Log.Info($"[UploadProfile] Updating profile for CRS+ character '{profile.CharacterName}' as physical character '{characterName}'");
-
-                var response = await http.SendAsync(request);
-
-                imageContent?.Dispose();
-                imageStream?.Dispose();
-
-                // Process response
-                var responseJson = await response.Content.ReadAsStringAsync();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var updated = JsonConvert.DeserializeObject<RPProfile>(responseJson);
-
-                    if (updated?.ProfileImageUrl is { Length: > 0 })
-                    {
-                        profile.ProfileImageUrl = updated.ProfileImageUrl;
-
-                        // Update the stored profile with the new image URL
-                        if (match?.RPProfile != null)
-                        {
-                            match.RPProfile.ProfileImageUrl = updated.ProfileImageUrl;
-                            Plugin.Log.Debug($"[UploadProfile] Updated ProfileImageUrl for {characterName} = {updated.ProfileImageUrl}");
-                            config?.Save();
-                        }
-                    }
-
-                    Plugin.Log.Info($"[UploadProfile] Successfully updated profile for CRS+ character {profile.CharacterName} as {characterName}");
-                }
-                else
-                {
-                    Plugin.Log.Warning($"[UploadProfile] Failed to upload profile for {characterName}: {response.StatusCode}");
-                    Plugin.Log.Warning($"[UploadProfile] Server response: {responseJson}");
-                }
-            }
-            catch (NullReferenceException nre)
-            {
-                Plugin.Log.Debug($"[UploadProfile] NullReference for {characterName}: {nre.Message}");
-            }
-            catch (Exception ex)
-            {
-                Plugin.Log.Error($"[UploadProfile] Exception: {ex}");
-            }
-            finally
-            {
-                // Restore original sharing mode if we overrode it
-                if (sharingOverride.HasValue)
-                {
-                    profile.Sharing = originalSharing;
-                }
-            }
-        }
-
-
 
         public static async Task<RPProfile?> FetchProfileAsync(string characterName)
         {
@@ -4042,24 +3734,6 @@ namespace CharacterReSelectPlugin
                 return;
             if (!ClientState.IsLoggedIn || RePlayerState == null)
                 return;
-
-            // Process pending shared name lookups (has internal rate limiting)
-            if (Configuration.EnableSharedNameReplacement && SharedNameManager != null)
-            {
-                // Queue stale cached entries for refresh (doesn't depend on nameplate updates)
-                SharedNameManager.QueueStaleEntriesForRefresh();
-
-                _ = SharedNameManager.ProcessPendingLookups();
-            }
-
-            // Request periodic nameplate redraws for smooth wave animation on other players' names
-            playerNameProcessor?.RequestRedrawIfNeeded();
-
-            // Process pending RP profile lookups for context menu (has internal rate limiting)
-            if (Configuration.ShowViewRPContextMenu && RPProfileLookupManager != null)
-            {
-                _ = RPProfileLookupManager.ProcessPendingLookups();
-            }
 
             if (Configuration.EnableLoginDelay)
             {
@@ -5027,9 +4701,6 @@ namespace CharacterReSelectPlugin
                 ActiveProfilesByPlayerName.Remove(fullKey);
                 activeCharacter = null;
 
-                // 8. Refresh party list to restore original name
-                playerNameProcessor?.RefreshPartyList();
-
                 // 9. Chat feedback
                 var builder = new SeStringBuilder();
                 builder.AddText("[").AddBlue("CRS+", true).AddText("] ");
@@ -5238,9 +4909,6 @@ namespace CharacterReSelectPlugin
                 shouldApplyPoses = true;
             }
 
-            // Refresh party list name replacement after character switch
-            playerNameProcessor?.RefreshPartyList();
-
             // Update character tracking for job change and quick switch features
             if (RePlayerState != null)
             {
@@ -5264,26 +4932,6 @@ namespace CharacterReSelectPlugin
             }
             SaveConfiguration();
 
-            // Always upload to keep server in sync - server uses sharing/exclusion flags to decide visibility
-            if (RePlayerState is { } uploadPlayer && uploadPlayer.HomeWorld.IsValid)
-            {
-                string localName = uploadPlayer.CharacterName;
-                string worldName = uploadPlayer.HomeWorld.Value.Name.ToString();
-                string fullKey = $"{localName}@{worldName}";
-
-                var profileToSend = BuildProfileForUpload(selectedCharacter);
-                var effectiveSharing = GetEffectiveSharingForUpload(selectedCharacter, fullKey);
-
-                // If profile is private/unmade or excluded, tell server not to show the name
-                bool shouldHideName = selectedCharacter.ExcludeFromNameSync ||
-                                      selectedCharacter.RPProfile == null ||
-                                      selectedCharacter.RPProfile.Sharing == ProfileSharing.NeverShare;
-
-                _ = Plugin.UploadProfileAsync(profileToSend, selectedCharacter.LastInGameName ?? selectedCharacter.Name,
-                    sharingOverride: shouldHideName ? ProfileSharing.NeverShare : effectiveSharing,
-                    excludeFromNameSync: selectedCharacter.ExcludeFromNameSync);
-                Log.Info($"[RandomSelect] ✓ Uploaded profile for {selectedCharacter.Name} (sharing: {(shouldHideName ? "NeverShare (hidden)" : effectiveSharing.ToString())}, excluded: {selectedCharacter.ExcludeFromNameSync})");
-            }
         }
 
         public void SelectRandomDesignOnly(string characterName)
@@ -5346,35 +4994,11 @@ namespace CharacterReSelectPlugin
             Configuration.LastUsedDesignByCharacter[character.Name] = selectedDesign.Name;
             Configuration.Save();
 
-            // Refresh party list name replacement after character switch
-            playerNameProcessor?.RefreshPartyList();
-
             // Send themed chat message if enabled
             if (Configuration.ShowRandomSelectionChatMessages)
             {
                 SeString message = GetRandomSelectionChatMessage(character.Name);
                 ChatGui.Print(message);
-            }
-
-            // Always upload to keep server in sync - server uses sharing/exclusion flags to decide visibility
-            if (RePlayerState is { } uploadPlayer && uploadPlayer.HomeWorld.IsValid)
-            {
-                string localName = uploadPlayer.CharacterName;
-                string worldName = uploadPlayer.HomeWorld.Value.Name.ToString();
-                string fullKey = $"{localName}@{worldName}";
-
-                var profileToSend = BuildProfileForUpload(character);
-                var effectiveSharing = GetEffectiveSharingForUpload(character, fullKey);
-
-                // If profile is private/unmade or excluded, tell server not to show the name
-                bool shouldHideName = character.ExcludeFromNameSync ||
-                                      character.RPProfile == null ||
-                                      character.RPProfile.Sharing == ProfileSharing.NeverShare;
-
-                _ = Plugin.UploadProfileAsync(profileToSend, character.LastInGameName ?? character.Name,
-                    sharingOverride: shouldHideName ? ProfileSharing.NeverShare : effectiveSharing,
-                    excludeFromNameSync: character.ExcludeFromNameSync);
-                Log.Info($"[RandomDesign] ✓ Uploaded profile for {character.Name} (sharing: {(shouldHideName ? "NeverShare (hidden)" : effectiveSharing.ToString())}, excluded: {character.ExcludeFromNameSync})");
             }
         }
 
@@ -5451,34 +5075,11 @@ namespace CharacterReSelectPlugin
                 Configuration.Save();
             }
 
-            // Refresh party list name replacement after character switch
-            playerNameProcessor?.RefreshPartyList();
-
             // Send themed chat message if enabled
             if (Configuration.ShowRandomSelectionChatMessages)
             {
                 SeString message = GetRandomSelectionChatMessage(selectedCharacter.Name, group.Name);
                 ChatGui.Print(message);
-            }
-
-            // Always upload to keep server in sync
-            if (RePlayerState is { } uploadPlayer && uploadPlayer.HomeWorld.IsValid)
-            {
-                string localName = uploadPlayer.CharacterName;
-                string worldName = uploadPlayer.HomeWorld.Value.Name.ToString();
-                string fullKey = $"{localName}@{worldName}";
-
-                var profileToSend = BuildProfileForUpload(selectedCharacter);
-                var effectiveSharing = GetEffectiveSharingForUpload(selectedCharacter, fullKey);
-
-                bool shouldHideName = selectedCharacter.ExcludeFromNameSync ||
-                                      selectedCharacter.RPProfile == null ||
-                                      selectedCharacter.RPProfile.Sharing == ProfileSharing.NeverShare;
-
-                _ = Plugin.UploadProfileAsync(profileToSend, selectedCharacter.LastInGameName ?? selectedCharacter.Name,
-                    sharingOverride: shouldHideName ? ProfileSharing.NeverShare : effectiveSharing,
-                    excludeFromNameSync: selectedCharacter.ExcludeFromNameSync);
-                Log.Info($"[RandomGroup] ✓ Selected {selectedCharacter.Name} from group '{group.Name}'");
             }
         }
 

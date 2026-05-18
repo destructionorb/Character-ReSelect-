@@ -45,6 +45,7 @@ namespace CharacterReSelectPlugin.Windows.Components
         private int? editedCharacterGearset = null;
         private bool editedCharacterExcludeFromNameSync = false;
         private string editedCharacterAlias = "";
+        private string editedCharacterPronouns= "";
 
         // Honorific fields
         private string editedCharacterHonorificTitle = "";
@@ -208,6 +209,7 @@ namespace CharacterReSelectPlugin.Windows.Components
             string tempCustomize = IsEditWindowOpen ? editedCharacterCustomize : plugin.NewCustomizeProfile;
             Vector3 tempColor = IsEditWindowOpen ? editedCharacterColor : plugin.NewCharacterColor;
             string tempTag = IsEditWindowOpen ? editedCharacterTag : plugin.NewCharacterTag;
+            string tempPronouns = IsEditWindowOpen ? editedCharacterPronouns : plugin.NewCharacterPronouns;
 
             // Character Name
             DrawFormField("Character Name*", labelWidth, inputWidth, inputOffset, () =>
@@ -409,6 +411,18 @@ namespace CharacterReSelectPlugin.Windows.Components
 
             // Idle Pose
             DrawIdlePoseField(labelWidth, inputWidth, inputOffset, scale);
+            ImGui.Separator();
+
+            // Character Pronouns
+            DrawFormField("Character Pronouns", labelWidth, inputWidth, inputOffset, () => //TODO: make Plugin.NewCharacterPronouns
+            {
+                ImGui.InputText("##CharacterPronouns", ref tempName, 50);
+                plugin.CharacterPronounFieldPos = ImGui.GetItemRectMin();
+                plugin.CharacterPronounFieldSize = ImGui.GetItemRectSize();
+
+                if (IsEditWindowOpen) editedCharacterPronouns = tempPronouns;
+
+            }, "Enter your OC's pronouns for immersive dialogue here.", scale);
             ImGui.Separator();
 
             // Assigned Gearset (only if enabled)

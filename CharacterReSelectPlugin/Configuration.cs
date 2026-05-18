@@ -106,7 +106,6 @@ namespace CharacterReSelectPlugin
         
         public HashSet<string> FavoriteGalleryProfiles { get; set; } = new();
         public HashSet<string> LikedGalleryProfiles { get; set; } = new();
-        public List<FavoriteSnapshot> FavoriteSnapshots { get; set; } = new();
         public bool ShowRecentlyActiveStatus { get; set; } = true;
         public bool HasSeenTutorial { get; set; } = false;
         public bool HasSeenPage2Surprise { get; set; } = false;
@@ -287,7 +286,6 @@ namespace CharacterReSelectPlugin
             config.LastUsedDesignByCharacter ??= new Dictionary<string, string>();
             config.FavoriteGalleryProfiles ??= new HashSet<string>();
             config.LikedGalleryProfiles ??= new HashSet<string>();
-            config.FavoriteSnapshots ??= new List<FavoriteSnapshot>();
             config.BlockedGalleryProfiles ??= new HashSet<string>();
             config.SecretModeBlacklistedMods ??= new HashSet<string>();
             config.FollowedPlayers ??= new HashSet<string>();
