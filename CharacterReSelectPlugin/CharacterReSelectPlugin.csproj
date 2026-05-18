@@ -10,7 +10,7 @@
         <UseWindowsForms>true</UseWindowsForms>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <UserSecretsId>39e1f8a5-b0d6-44c6-ad05-a9405ac1dcfb</UserSecretsId>
-      <BaseOutputPath>Z:\Character-ReSelect-\CharacterReSelectPlugin\bin</BaseOutputPath>
+      <BaseOutputPath>.\bin</BaseOutputPath>
   </PropertyGroup>
     <ItemGroup>
         <Reference Include="System.Windows.Forms" />
